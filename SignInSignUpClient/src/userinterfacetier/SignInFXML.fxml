@@ -26,11 +26,11 @@
          <children>
             <Label prefHeight="18.0" prefWidth="88.0" text="Email" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label prefHeight="18.0" prefWidth="88.0" text="Contraseña" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <TextField alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="202.0" text="Entrar" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <TextField fx:id="txtPsswd" alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <TextField fx:id="txtEmail" alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Button fx:id="btnEntrar" mnemonicParsing="false" prefHeight="26.0" prefWidth="202.0" text="Entrar" GridPane.columnIndex="2" GridPane.rowIndex="3" />
             <Label prefHeight="18.0" prefWidth="121.0" text="¿No estás registrado?" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Button mnemonicParsing="false" onAction="#handleSignUpButtonAction" prefHeight="26.0" prefWidth="202.0" text="Crear una cuenta" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Button fx:id="btnSignUp" mnemonicParsing="false" prefHeight="26.0" prefWidth="202.0" text="Crear una cuenta" GridPane.columnIndex="2" GridPane.rowIndex="4" />
          </children>
       </GridPane>
    </children>

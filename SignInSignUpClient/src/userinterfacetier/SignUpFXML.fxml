@@ -29,17 +29,17 @@
         </rowConstraints>
          <children>
             <Label prefHeight="18.0" prefWidth="88.0" text="Contraseña" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <TextField prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <TextField fx:id="txtEmail" prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="txtPsswd" prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <Label prefHeight="18.0" prefWidth="88.0" text="Nombre" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label prefHeight="18.0" prefWidth="88.0" text="Apellido" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label prefHeight="18.0" prefWidth="88.0" text="Email" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <TextField prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="221.0" text="Crear cuenta" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+            <TextField fx:id="txtNombre" prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <TextField fx:id="txtApellido" prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Button fx:id="btnRegistrarse" mnemonicParsing="false" prefHeight="26.0" prefWidth="221.0" text="Crear cuenta" GridPane.columnIndex="2" GridPane.rowIndex="7" />
             <Label prefHeight="18.0" prefWidth="124.0" text="¿Ya tienes una cuenta?" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="221.0" text="Inicia sesión" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-            <TextField GridPane.columnIndex="2" GridPane.rowIndex="5" />
+            <Button fx:id="btnIniciaSesion" mnemonicParsing="false" prefHeight="26.0" prefWidth="221.0" text="Inicia sesión" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <TextField fx:id="txtEdad" GridPane.columnIndex="2" GridPane.rowIndex="5" />
             <Label prefHeight="18.0" prefWidth="88.0" text="Edad" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
