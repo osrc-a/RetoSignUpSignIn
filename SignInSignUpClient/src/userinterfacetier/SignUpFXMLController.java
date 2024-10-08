@@ -5,6 +5,7 @@
  */
 package userinterfacetier;
 
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -14,10 +15,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import modelo.Usuario;
 
+
 /**
  *
  * @author 2dam
  */
+
 public class SignUpFXMLController{
     
     @FXML
@@ -30,7 +33,7 @@ public class SignUpFXMLController{
     private TextField email;
     
     @FXML
-    private TextField contraseina;
+    private TextField contrasena;
     
     @FXML
     private TextField edad;
@@ -46,5 +49,6 @@ public class SignUpFXMLController{
         
         
     }
+
 
 }
