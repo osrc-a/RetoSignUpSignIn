@@ -5,18 +5,50 @@
  */
 package userinterfacetier;
 
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import modelo.Usuario;
+
 
 /**
  *
  * @author 2dam
  */
-public class SignUpFXMLController {
+
+public class SignUpFXMLController{
     
+    @FXML
+    private TextField nombre;
+    
+    @FXML
+    private TextField apellido;
+    
+    @FXML
+    private TextField email;
+    
+    @FXML
+    private TextField contrasena;
+    
+    @FXML
+    private TextField edad;
+    
+    
+    
+    private void registro(ActionEvent event){
+        Usuario usu=new Usuario();
+        usu.setNombre(nombre.getText());
+        usu.setApellido(apellido.getText());
+        usu.setEmail(email.getText());
+        
+        
+        
+    }
+
 
 }
