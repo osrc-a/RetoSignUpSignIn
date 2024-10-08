@@ -7,22 +7,51 @@ package userinterfacetier;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
  *
  * @author 2dam
  */
-public class SignInFXMLController implements Initializable {
+public class SignInFXMLController {
 
     /**
      * Initializes the controller class.
      */
-    
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+    @FXML
+    private TextField txtEmail;
+
+    @FXML
+    private PasswordField txtPsswd;
+    @FXML
+    private Label lblError;
+
+ 
+    @FXML
+    private void handleLogin() throws Exception {
+    String email = txtEmail.getText();
+    String password = txtPsswd.getText();
+
+    if (email.isEmpty() || password.isEmpty()) {
+        lblError.setText("Por favor, completa todos los campos.");
+        return;
+    }
+
+    if (email.equals("usuario") && password.equals("contraseña")) {
+        SignUpSignIn.navegarVentanas("MainDashboardFXML.fxml");
+    } else {
+        lblError.setText("Correo o contraseña incorrectos");
+    }
+}
+    // Navegar a la ventana de registro (Sign Up)
+    @FXML
+    private void irASignUp() throws Exception {
+        SignUpSignIn.navegarVentanas("SignUpFXML.fxml");
+    }
     
 }

@@ -15,14 +15,26 @@ import javafx.stage.Stage;
  */
 public class SignUpSignIn extends javafx.application.Application {
     
+    private static Stage primaryStage;
+    
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("SignUpFXML.fxml"));
+        primaryStage = stage;
+        Parent root = FXMLLoader.load(getClass().getResource("SignInFXML.fxml"));
         
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
+        stage.setTitle("Sign In");
         stage.show();
+    }
+    
+    public static void navegarVentanas(String fmxl) throws Exception{
+        
+        Parent pane = FXMLLoader.load(SignUpSignIn.class.getResource(fmxl));
+        primaryStage.getScene().setRoot(pane);
+        
+        
     }
 
     /**
