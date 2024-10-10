@@ -24,6 +24,9 @@ public class SignUpSignIn extends javafx.application.Application {
         
         Scene scene = new Scene(root);
         
+        stage.setWidth(800); 
+        stage.setHeight(700); 
+        
         stage.setScene(scene);
         stage.setTitle("Sign In");
         stage.show();

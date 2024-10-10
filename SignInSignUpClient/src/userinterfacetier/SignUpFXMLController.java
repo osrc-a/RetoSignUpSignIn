@@ -49,6 +49,11 @@ public class SignUpFXMLController{
         
         
     }
+    
+    @FXML
+    private void irASignIn() throws Exception {
+        SignUpSignIn.navegarVentanas("SignInFXML.fxml");
+    }
 
 
 }
