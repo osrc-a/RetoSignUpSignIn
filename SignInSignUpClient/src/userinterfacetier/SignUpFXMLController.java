@@ -24,27 +24,24 @@ import modelo.Usuario;
 public class SignUpFXMLController {
 
     @FXML
-    private TextField nombre;
+    private TextField tfNombre;
 
     @FXML
-    private TextField apellido;
+    private TextField tfApellido;
 
     @FXML
-    private TextField email;
+    private TextField tfEmail;
 
+    
     @FXML
-    private TextField contrasena;
-
-    @FXML
-    private TextField edad;
-
     private void registro(ActionEvent event) {
 
         try {
+            System.out.println("userinterfacetier.SignUpFXMLController.registro()");
             Usuario usu = new Usuario();
-            usu.setNombre(nombre.getText());
-            usu.setApellido(apellido.getText());
-            usu.setEmail(email.getText());
+            usu.setNombre(tfNombre.getText());
+            usu.setApellido(tfApellido.getText());
+            usu.setEmail(tfEmail.getText());
             FactorySignable.getSignable().registrar(usu);
         } catch (Exception ex) {
             Logger.getLogger(SignUpFXMLController.class.getName()).log(Level.SEVERE, null, ex);
