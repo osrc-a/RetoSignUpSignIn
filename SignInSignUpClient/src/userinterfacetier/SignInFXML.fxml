@@ -9,7 +9,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="AnchorPane" prefHeight="392.0" prefWidth="527.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="userinterfacetier.SignInFXMLController">
+
+<AnchorPane id="AnchorPane" prefHeight="324.0" prefWidth="465.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.261" xmlns:fx="http://javafx.com/fxml/1" fx:controller="userinterfacetier.SignInFXMLController">
+
    <children>
       <GridPane layoutX="6.0" layoutY="2.0" prefHeight="600.0" prefWidth="800.0">
         <columnConstraints>
