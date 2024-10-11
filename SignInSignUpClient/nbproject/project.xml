@@ -31,7 +31,9 @@
                 <id>jar</id>
             </reference>
             <reference>
-                <foreign-project>SignInSignUpLibraries-1</foreign-project>
+
+                <foreign-project>SignInSignUpLibraries</foreign-project>
+
                 <artifact-type>jar</artifact-type>
                 <script>build.xml</script>
                 <target>jar</target>
