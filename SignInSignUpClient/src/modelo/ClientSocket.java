@@ -21,6 +21,7 @@ public class ClientSocket implements Signable {
     private final int PUERTO = 9000;
     private final String IP = "127.0.0.1";
 
+    @Override
     public void registrar(Usuario user) {
         Socket socket = null;
         ObjectInputStream entrada = null;

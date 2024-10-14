@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package modelo;
-
-import modelo.ClientSocket;
 /**
  *
  * @author 2dam
