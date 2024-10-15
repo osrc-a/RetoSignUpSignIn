@@ -31,14 +31,22 @@ public class SignUpFXMLController {
     
     @FXML
     private void registro(ActionEvent event) {
-
+    
         try {
-            System.out.println("userinterfacetier.SignUpFXMLController.registro()");
+             //LocalDate fecha=fechaNac.getValue(); 
+             //System.out.println(fecha.toString());
+
             Usuario usu = new Usuario();
+            usu.setEmail(tfEmail.getText());
+            //if (tfpContrasena.getText().equals(tfpContrasena2.getText())) {
+                //usu.setContrasena(tfpContrasena.getText());
+
+            //}
+
             usu.setNombre(tfNombre.getText());
             usu.setApellido(tfApellido.getText());
-            usu.setEmail(tfEmail.getText());
-            FactorySignable.getSignable().registrar(usu);
+
+          FactorySignable.getSignable().registrar(usu);
         } catch (Exception ex) {
             Logger.getLogger(SignUpFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
