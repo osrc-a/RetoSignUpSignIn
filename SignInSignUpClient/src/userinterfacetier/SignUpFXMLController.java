@@ -6,15 +6,18 @@
 package userinterfacetier;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import modelo.FactorySignable;
+import modelo.FactorySignableClient;
 import modelo.Usuario;
 
 /**
@@ -24,34 +27,53 @@ import modelo.Usuario;
 public class SignUpFXMLController {
 
     @FXML
+    private TextField tfEmail;
+
+    @FXML
     private TextField tfNombre;
 
     @FXML
     private TextField tfApellido;
 
     @FXML
-    private TextField tfEmail;
+    private PasswordField tfpContrasena;
 
+    @FXML
+    private PasswordField tfpContrasena2;
+    
+    @FXML
+    private DatePicker fechaNac;
+
+ 
     
     @FXML
     private void registro(ActionEvent event) {
-
+        
         try {
-            System.out.println("userinterfacetier.SignUpFXMLController.registro()");
+             //LocalDate fecha=fechaNac.getValue(); 
+             //System.out.println(fecha.toString());
+
             Usuario usu = new Usuario();
+            usu.setEmail(tfEmail.getText());
+            //if (tfpContrasena.getText().equals(tfpContrasena2.getText())) {
+                //usu.setContrasena(tfpContrasena.getText());
+
+            //}
+
             usu.setNombre(tfNombre.getText());
             usu.setApellido(tfApellido.getText());
-            usu.setEmail(tfEmail.getText());
-            FactorySignable.getSignable().registrar(usu);
+
+            FactorySignableClient.getSignable().registrar(usu);
         } catch (Exception ex) {
             Logger.getLogger(SignUpFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
-    
+
     @FXML
     private void irASignIn() throws Exception {
         SignUpSignIn.navegarVentanas("SignInFXML.fxml");
     }
 
 }
+    
