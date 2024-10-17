@@ -5,16 +5,12 @@
  */
 package userinterfacetier;
 
-import java.net.URL;
 import java.time.LocalDate;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import modelo.FactorySignableClient;
@@ -44,19 +40,17 @@ public class SignUpFXMLController {
     @FXML
     private DatePicker fechaNac;
 
- 
-    
     @FXML
     private void registro(ActionEvent event) {
         
         try {
-             //LocalDate fecha=fechaNac.getValue(); 
+            // LocalDate fecha=fechaNac.getValue(); 
              //System.out.println(fecha.toString());
 
             Usuario usu = new Usuario();
             usu.setEmail(tfEmail.getText());
             //if (tfpContrasena.getText().equals(tfpContrasena2.getText())) {
-                //usu.setContrasena(tfpContrasena.getText());
+              //  usu.setContrasena(tfpContrasena.getText());
 
             //}
 
