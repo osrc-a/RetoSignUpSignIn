@@ -4,11 +4,13 @@
  * and open the template in the editor.
  */
 package modelo;
+
+import modelo.ClientSocket;
 /**
  *
  * @author 2dam
  */
-public class FactorySignable {
+public class FactorySignableClient {
     
     
     

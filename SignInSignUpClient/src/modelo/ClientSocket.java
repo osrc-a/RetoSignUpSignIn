@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class ClientSocket implements Signable {
 
-    private final int PUERTO = 9000;
+    private final int PUERTO = 5000;
     private final String IP = "127.0.0.1";
 
     @Override
@@ -29,14 +29,13 @@ public class ClientSocket implements Signable {
 
         try {
             socket = new Socket(IP, PUERTO);
-
-            System.out.println("Esperando que el servidor envíe algo....");
-            entrada = new ObjectInputStream(socket.getInputStream());
             salida = new ObjectOutputStream(socket.getOutputStream());
-
+            entrada = new ObjectInputStream(socket.getInputStream());
             String mensaje = (String) entrada.readObject();
-            System.out.println("Conexión realizada con servidor");
-
+            System.out.println(mensaje);
+            
+            
+            System.out.println("Mandando usuario");
             salida.writeObject(user);
             
             
