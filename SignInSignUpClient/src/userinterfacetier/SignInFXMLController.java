@@ -22,14 +22,12 @@ public class SignInFXMLController {
      */
     @FXML
     private TextField txtEmail;
-
     @FXML
     private PasswordField txtPsswd;
     @FXML
     private Label lblError;
-
- 
     @FXML
+    
     private void handleLogin() throws Exception {
     String email = txtEmail.getText();
     String password = txtPsswd.getText();
@@ -50,5 +48,9 @@ public class SignInFXMLController {
     private void irASignUp() throws Exception {
         SignUpSignIn.navegarVentanas("SignUpFXML.fxml");
     }
-    
 }
+   
+    
+
+    
+
