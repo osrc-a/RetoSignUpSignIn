@@ -7,6 +7,7 @@ package userinterfacetier;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 /**
@@ -14,22 +15,25 @@ import javafx.stage.Stage;
  * @author 2dam
  */
 public class SignUpSignIn extends javafx.application.Application {
-    
+    private Button button;
+
     private static Stage primaryStage;
     
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
         Parent root = FXMLLoader.load(getClass().getResource("SignInFXML.fxml"));
-        
+        root.setId("pane");
         Scene scene = new Scene(root);
-        
+        primaryStage.setScene(scene);
+        primaryStage.show();
         stage.setWidth(800); 
         stage.setHeight(700); 
         
         stage.setScene(scene);
         stage.setTitle("Sign In");
         stage.show();
+       
     }
     
     public static void navegarVentanas(String fmxl) throws Exception{
@@ -45,6 +49,7 @@ public class SignUpSignIn extends javafx.application.Application {
      */
     public static void main(String[] args) {
         launch(args);
+       
     }
     
 }
