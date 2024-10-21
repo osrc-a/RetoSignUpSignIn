@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package userinterfacetier;
+package controller;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,16 +14,17 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import modelo.FactorySignableClient;
 import modelo.Usuario;
+import userinterfacetier.SignUpSignIn;
 
 /**
  *
  * @author 2dam
  */
-public class SignUpFXMLController {
+public class SignUpFXMLController{
 
     @FXML
     private TextField tfEmail;
-
+ 
     @FXML
     private TextField tfNombre;
 
@@ -41,17 +42,18 @@ public class SignUpFXMLController {
 
     @FXML
     private void registro(ActionEvent event) {
-        
+     
         try {
             // LocalDate fecha=fechaNac.getValue(); 
              //System.out.println(fecha.toString());
 
             Usuario usu = new Usuario();
             usu.setEmail(tfEmail.getText());
-            //if (tfpContrasena.getText().equals(tfpContrasena2.getText())) {
-              //  usu.setContrasena(tfpContrasena.getText());
-
-            //}
+            if (!tfpContrasena.getText().equalsIgnoreCase(tfpContrasena2.getText())) {
+                  usu.setContrasena(tfpContrasena.getText());
+            } else {
+              
+            }
 
             usu.setNombre(tfNombre.getText());
             usu.setApellido(tfApellido.getText());
