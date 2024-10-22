@@ -5,6 +5,8 @@
  */
 package controller;
 
+import excepciones.CreateException;
+import java.time.LocalDate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
@@ -44,24 +46,24 @@ public class SignUpFXMLController{
     private void registro(ActionEvent event) {
      
         try {
-            // LocalDate fecha=fechaNac.getValue(); 
-             //System.out.println(fecha.toString());
-
-            Usuario usu = new Usuario();
-            usu.setEmail(tfEmail.getText());
-            if (!tfpContrasena.getText().equalsIgnoreCase(tfpContrasena2.getText())) {
+                 Usuario usu = new Usuario();
+           
+             usu.setEmail(tfEmail.getText());
+            if (tfpContrasena.getText().equalsIgnoreCase(tfpContrasena2.getText())) {
                   usu.setContrasena(tfpContrasena.getText());
             } else {
               
-            }
-
+            } 
             usu.setNombre(tfNombre.getText());
             usu.setApellido(tfApellido.getText());
+             LocalDate fecha=fechaNac.getValue(); 
+             System.out.println(fecha.toString());
 
             FactorySignableClient.getSignable().registrar(usu);
-        } catch (Exception ex) {
+            
+            } catch (CreateException ex) {
             Logger.getLogger(SignUpFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            }
 
     }
 

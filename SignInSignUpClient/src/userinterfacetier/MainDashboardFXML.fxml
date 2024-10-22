@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
 
 <GridPane xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainDashboardFXMLController">
    <columnConstraints>
@@ -17,11 +19,21 @@
    </rowConstraints>
    <children>
       <AnchorPane id="pane" depthTest="DISABLE" prefHeight="500.0" prefWidth="600.0" stylesheets="@../resources/SignInSignUpClient.css">
-         <cursor>
-            <Cursor fx:constant="NONE" />
-         </cursor>
          <children>
-            <Button layoutX="469.0" layoutY="60.0" mnemonicParsing="false" styleClass="labelRounded" text="cerrar cesion" textAlignment="CENTER" />
+            <Button layoutX="469.0" layoutY="60.0" mnemonicParsing="false" style="-fx-background-color: grey;" styleClass="labelRounded" text="Cerrar cesion" textAlignment="CENTER">
+               <textFill>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop color="BLACK" />
+                        <Stop color="#312b2b" offset="1.0" />
+                     </stops>
+                  </RadialGradient>
+               </textFill></Button>
+            <Label layoutX="134.0" layoutY="209.0" prefHeight="54.0" prefWidth="158.0" style="-fx-background-color: white;" styleClass="labelRounded" text="BIENVENIDO" textAlignment="CENTER" textFill="#302b2b">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>
