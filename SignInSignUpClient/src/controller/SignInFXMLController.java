@@ -3,11 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-/**
- * FXML Controller class
- *
- * @author 2dam
- */
 package controller;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -16,15 +11,22 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import userinterfacetier.SignUpSignIn;
+/**
+ * FXML Controller class
+ *
+ * @author 2dam
+ */
 
 public class SignInFXMLController {
     
     
 
+
     @FXML
     private TextField txtEmail;
     @FXML
     private PasswordField txtPsswd;
+
 
     // Expresión regular para validar email
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" +
@@ -37,6 +39,43 @@ public class SignInFXMLController {
     private void handleLogin() throws Exception {
         String email = txtEmail.getText();
         String password = txtPsswd.getText();
+}
+
+       
+
+    @FXML
+    private void irASignUp() throws Exception {
+        SignUpSignIn.navegarVentanas("SignUpFXML.fxml");
+    }
+
+    public void initialize() {
+        // Se usa Platform.runLater() para asegurarse de que el Stage esté inicializado
+        Platform.runLater(() -> {
+            Stage stage = (Stage) lblError.getScene().getWindow();
+            // Configuramos el evento al cerrar la ventana con la "X"
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    event.consume();  // Consumir el evento para manejarlo manualmente
+                    handleClose();
+                }
+            });
+        });
+    }
+
+    private void handleClose() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmación");
+        alert.setHeaderText("¿Está seguro de que desea cerrar la aplicación?");
+        alert.setContentText("Todos los cambios no guardados se perderán.");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            Stage stage = (Stage) lblError.getScene().getWindow();
+            stage.close();
+        }
+    }
+}
 
         // Validar los campos y obtener el mensaje de error, si existe
         String validationError = validarCampos(email, password);
@@ -95,11 +134,5 @@ public class SignInFXMLController {
         Pattern pattern = Pattern.compile(PASSWORD_REGEX);
         Matcher matcher = pattern.matcher(password);
         return matcher.matches();
-    }
-
-    // Navegar a la ventana de registro (Sign Up)
-    @FXML
-    private void irASignUp() throws Exception {
-        SignUpSignIn.navegarVentanas("SignUpFXML.fxml");
     }
 }
