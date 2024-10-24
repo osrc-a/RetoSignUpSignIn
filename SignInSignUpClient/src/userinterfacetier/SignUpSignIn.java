@@ -4,10 +4,12 @@
  * and open the template in the editor.
  */
 package userinterfacetier;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -15,10 +17,11 @@ import javafx.stage.Stage;
  * @author 2dam
  */
 public class SignUpSignIn extends javafx.application.Application {
+
     private Button button;
 
     private static Stage primaryStage;
-    
+
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
@@ -27,21 +30,22 @@ public class SignUpSignIn extends javafx.application.Application {
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
-        stage.setWidth(800); 
-        stage.setHeight(700); 
-        
+        //stage.setWidth(800); 
+        primaryStage.setResizable(false);
+        //stage.setHeight(700); 
+        primaryStage.getIcons().add(new Image("imagenes/logoSignUpSignIn.jpg"));
+
         stage.setScene(scene);
         stage.setTitle("Sign In");
         stage.show();
-       
+
     }
-    
-    public static void navegarVentanas(String fmxl) throws Exception{
-        
+
+    public static void navegarVentanas(String fmxl) throws Exception {
+
         Parent pane = FXMLLoader.load(SignUpSignIn.class.getResource(fmxl));
         primaryStage.getScene().setRoot(pane);
-        
-        
+
     }
 
     /**
@@ -49,7 +53,7 @@ public class SignUpSignIn extends javafx.application.Application {
      */
     public static void main(String[] args) {
         launch(args);
-       
+
     }
-    
+
 }

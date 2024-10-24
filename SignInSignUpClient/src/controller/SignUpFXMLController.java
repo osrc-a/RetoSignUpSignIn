@@ -5,13 +5,21 @@
  */
 package userinterfacetier;
 
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import modelo.FactorySignableClient;
 import modelo.Usuario;
 
@@ -35,24 +43,26 @@ public class SignUpFXMLController {
 
     @FXML
     private PasswordField tfpContrasena2;
-    
+
     @FXML
     private DatePicker fechaNac;
+    
+    @FXML
+    private Label lblError;
 
     @FXML
     private void registro(ActionEvent event) {
-        
+
         try {
             // LocalDate fecha=fechaNac.getValue(); 
-             //System.out.println(fecha.toString());
+            //System.out.println(fecha.toString());
 
             Usuario usu = new Usuario();
             usu.setEmail(tfEmail.getText());
             //if (tfpContrasena.getText().equals(tfpContrasena2.getText())) {
-              //  usu.setContrasena(tfpContrasena.getText());
+            //  usu.setContrasena(tfpContrasena.getText());
 
             //}
-
             usu.setNombre(tfNombre.getText());
             usu.setApellido(tfApellido.getText());
 
@@ -68,5 +78,32 @@ public class SignUpFXMLController {
         SignUpSignIn.navegarVentanas("SignInFXML.fxml");
     }
 
+    public void initialize() {
+        // Se usa Platform.runLater() para asegurarse de que el Stage esté inicializado
+        Platform.runLater(() -> {
+            Stage stage = (Stage) lblError.getScene().getWindow();
+            // Configuramos el evento al cerrar la ventana con la "X"
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    event.consume();  // Consumir el evento para manejarlo manualmente
+                    handleClose();
+                }
+            });
+        });
+    }
+
+    private void handleClose() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmación");
+        alert.setHeaderText("¿Está seguro de que desea cerrar la aplicación?");
+        alert.setContentText("Todos los cambios no guardados se perderán.");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            Stage stage = (Stage) lblError.getScene().getWindow();
+            stage.close();
+        }
+    }
+
 }
-    
