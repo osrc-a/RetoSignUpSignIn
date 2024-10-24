@@ -9,33 +9,33 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="pane" prefHeight="324.0" prefWidth="465.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SignInFXMLController">
+<AnchorPane id="pane" prefHeight="324.0" prefWidth="465.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SignInFXMLController">
 
-   <children>
-      <GridPane fx:id="pane" prefHeight="552.0" prefWidth="768.0" stylesheets="@../resources/css/SignInSignUpClient.css" >
-        <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="263.3999786376953" minWidth="10.0" prefWidth="134.80001220703124" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="538.4" minWidth="0.0" prefWidth="165.9999877929687" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="582.7999786376952" minWidth="0.0" prefWidth="469.9999755859374" />
-        </columnConstraints>
-        <rowConstraints>
-            <RowConstraints maxHeight="165.59998474121093" minHeight="10.0" prefHeight="165.59998474121093" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="108.99999389648437" minHeight="10.0" prefHeight="61.60001525878906" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="138.39999389648438" minHeight="10.0" prefHeight="63.400006103515636" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="147.19998779296873" minHeight="10.0" prefHeight="37.80001220703127" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="246.40001831054684" minHeight="10.0" prefHeight="38.40001220703124" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="212.00002441406252" minHeight="24.000024414062523" prefHeight="200.59998779296876" />
-        </rowConstraints>
-         <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="98.0" style="-fx-background-color: white;" styleClass="labelRounded" stylesheets="@../resources/css/SignInSignUpClient.css" text="Email" textAlignment="CENTER" textFill="#0f0026" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label alignment="CENTER" prefHeight="18.0" prefWidth="88.0" style="-fx-background-color: white;" styleClass="labelRounded" stylesheets="@../resources/css/SignInSignUpClient.css" text="Contraseña" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label fx:id="lblError" text="" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-            <TextField fx:id="txtEmail" alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Button fx:id="btnEntrar" mnemonicParsing="false" onAction="#handleLogin" prefHeight="26.0" prefWidth="202.0" styleClass="labelRounded" text="Entrar" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <Label alignment="CENTER" prefHeight="18.0" prefWidth="149.0" style="-fx-background-color: white;" styleClass="labelRounded" stylesheets="@../resources/css/SignInSignUpClient.css" text="¿No estás registrado?" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <Button fx:id="btnSignUp" mnemonicParsing="false" onAction="#irASignUp" prefHeight="23.0" prefWidth="202.0" styleClass="labelRounded" text="Crear una cuenta" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-            <PasswordField fx:id="txtPsswd" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-         </children>
-      </GridPane>
-   </children>
+    <children>
+        <GridPane fx:id="pane" prefHeight="552.0" prefWidth="768.0" stylesheets="@../resources/css/SignInSignUpClient.css">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="263.3999786376953" minWidth="10.0" prefWidth="134.80001220703124" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="538.4" minWidth="0.0" prefWidth="165.9999877929687" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="582.7999786376952" minWidth="0.0" prefWidth="469.9999755859374" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints maxHeight="165.59998474121093" minHeight="10.0" prefHeight="165.59998474121093" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="108.99999389648437" minHeight="10.0" prefHeight="61.60001525878906" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="138.39999389648438" minHeight="10.0" prefHeight="63.400006103515636" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="147.19998779296873" minHeight="10.0" prefHeight="37.80001220703127" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="246.40001831054684" minHeight="10.0" prefHeight="38.40001220703124" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="212.00002441406252" minHeight="24.000024414062523" prefHeight="200.59998779296876" />
+            </rowConstraints>
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="98.0" style="-fx-background-color: white;" styleClass="labelRounded" stylesheets="@../resources/css/SignInSignUpClient.css" text="Email" textAlignment="CENTER" textFill="#0f0026" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Label alignment="CENTER" prefHeight="18.0" prefWidth="88.0" style="-fx-background-color: white;" styleClass="labelRounded" stylesheets="@../resources/css/SignInSignUpClient.css" text="Contraseña" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Label fx:id="lblError" text="" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+                <TextField fx:id="txtEmail" alignment="CENTER" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                <Button fx:id="btnEntrar" mnemonicParsing="false" onAction="#handleLogin" prefHeight="26.0" prefWidth="202.0" styleClass="labelRounded" text="Entrar" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                <Label alignment="CENTER" prefHeight="18.0" prefWidth="149.0" style="-fx-background-color: white;" styleClass="labelRounded" stylesheets="@../resources/css/SignInSignUpClient.css" text="¿No estás registrado?" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <Button fx:id="btnSignUp" mnemonicParsing="false" onAction="#irASignUp" prefHeight="23.0" prefWidth="202.0" styleClass="labelRounded" text="Crear una cuenta" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                <PasswordField fx:id="txtPsswd" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            </children>
+        </GridPane> 
+    </children>
 </AnchorPane>

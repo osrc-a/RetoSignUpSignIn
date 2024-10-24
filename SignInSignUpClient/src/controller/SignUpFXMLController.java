@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package controller;
 
 import java.util.logging.Level;
@@ -54,7 +55,6 @@ public class SignUpFXMLController{
             } else {
               
             }
-
             usu.setNombre(tfNombre.getText());
             usu.setApellido(tfApellido.getText());
 
@@ -70,5 +70,32 @@ public class SignUpFXMLController{
         SignUpSignIn.navegarVentanas("SignInFXML.fxml");
     }
 
+    public void initialize() {
+        // Se usa Platform.runLater() para asegurarse de que el Stage esté inicializado
+        Platform.runLater(() -> {
+            Stage stage = (Stage) lblError.getScene().getWindow();
+            // Configuramos el evento al cerrar la ventana con la "X"
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent event) {
+                    event.consume();  // Consumir el evento para manejarlo manualmente
+                    handleClose();
+                }
+            });
+        });
+    }
+
+    private void handleClose() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmación");
+        alert.setHeaderText("¿Está seguro de que desea cerrar la aplicación?");
+        alert.setContentText("Todos los cambios no guardados se perderán.");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            Stage stage = (Stage) lblError.getScene().getWindow();
+            stage.close();
+        }
+    }
+
 }
-    
