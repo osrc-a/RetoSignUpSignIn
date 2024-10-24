@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-
 <AnchorPane id="pane" prefHeight="594.0" prefWidth="789.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SignUpFXMLController">
     <children>
         <GridPane id="pane" layoutX="1.0" maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="851.0" stylesheets="@../resources/css/SignInSignUpClient.css">

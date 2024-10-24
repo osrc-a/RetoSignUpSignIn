@@ -6,6 +6,7 @@
 package controller;
 
 import java.net.URL;
+
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -61,4 +62,5 @@ public class MainDashboardFXMLController implements Initializable {
             stage.close();
         }
     }
+
 }
