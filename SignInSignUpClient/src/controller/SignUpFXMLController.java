@@ -6,13 +6,20 @@
 
 package controller;
 
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import modelo.FactorySignableClient;
 import modelo.Usuario;
 import userinterfacetier.SignUpSignIn;
@@ -73,7 +80,7 @@ public class SignUpFXMLController{
     public void initialize() {
         // Se usa Platform.runLater() para asegurarse de que el Stage esté inicializado
         Platform.runLater(() -> {
-            Stage stage = (Stage) lblError.getScene().getWindow();
+            Stage stage = (Stage) tfApellido.getScene().getWindow();
             // Configuramos el evento al cerrar la ventana con la "X"
             stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
@@ -93,7 +100,7 @@ public class SignUpFXMLController{
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            Stage stage = (Stage) lblError.getScene().getWindow();
+            Stage stage = (Stage) tfApellido.getScene().getWindow();
             stage.close();
         }
     }
