@@ -22,6 +22,14 @@ import userinterfacetier.ContextMenuManager;
 
 public class MainDashboardFXMLController implements Initializable {
 
+
+    /**
+     * Initializes the controller class.
+     * @param url
+     * @param rb
+     */
+    
+
     @FXML
     private Label lbbienvenido;
 
@@ -29,6 +37,7 @@ public class MainDashboardFXMLController implements Initializable {
     private AnchorPane pane; // Asegúrate de que este es el ID de tu AnchorPane en el FXML.
 
     private ContextMenuManager contextMenuManager;
+
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
