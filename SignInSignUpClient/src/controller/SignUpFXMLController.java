@@ -65,8 +65,8 @@ public class SignUpFXMLController{
 
             usu.setNombre(tfNombre.getText());
             usu.setApellido(tfApellido.getText());
-             LocalDate fecha=fechaNac.getValue(); 
-             System.out.println(fecha.toString());
+         //    LocalDate fecha=fechaNac.getValue(); 
+           //  System.out.println(fecha.toString());
 
             FactorySignableClient.getSignable().registrar(usu);
             
