@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import excepciones.CreateException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -48,8 +49,7 @@ public class ClientSocket implements Signable {
     }
 
     @Override
-    public void login(Usuario user) throws Exception {
+    public Usuario login(Usuario user) throws CreateException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
 }
