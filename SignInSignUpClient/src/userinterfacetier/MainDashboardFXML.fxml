@@ -11,7 +11,7 @@
             stylesheets="@../resources/css/SignInSignUpClient.css" 
             xmlns="http://javafx.com/javafx/8" 
             xmlns:fx="http://javafx.com/fxml/1" 
-            fx:controller="userinterfacetier.MainDashboardFXMLController">
+            fx:controller="controller.MainDashboardFXMLController">
     <children>
         <Label fx:id="lbbienvenido" alignment="TOP_CENTER" layoutX="135.0" layoutY="185.0" 
                prefHeight="34.0" prefWidth="138.0" 

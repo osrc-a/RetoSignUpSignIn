@@ -4,12 +4,18 @@
  * and open the template in the editor.
  */
 package controller;
+import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import userinterfacetier.SignUpSignIn;
 /**
  * FXML Controller class
@@ -39,7 +45,23 @@ public class SignInFXMLController {
     private void handleLogin() throws Exception {
         String email = txtEmail.getText();
         String password = txtPsswd.getText();
-}
+        
+        // Validar los campos y obtener el mensaje de error, si existe
+        String validationError = validarCampos(email, password);
+
+        if (validationError != null) {
+            mostrarAlerta("Error", validationError);
+            return;  // Salir del método si hay errores
+        }
+
+        // Comprobar credenciales (email y contraseña correctos)
+        if (email.equals("oscardan@gmx.es") && password.equals("abcd*1234")) {
+            SignUpSignIn.navegarVentanas("MainDashboardFXML.fxml");
+        } else {
+            mostrarAlerta("Error", "Email o contraseña incorrectos.");
+        }
+    }
+        
 
        
 
@@ -51,7 +73,7 @@ public class SignInFXMLController {
     public void initialize() {
         // Se usa Platform.runLater() para asegurarse de que el Stage esté inicializado
         Platform.runLater(() -> {
-            Stage stage = (Stage) lblError.getScene().getWindow();
+            Stage stage = (Stage) txtPsswd.getScene().getWindow();
             // Configuramos el evento al cerrar la ventana con la "X"
             stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
@@ -71,28 +93,10 @@ public class SignInFXMLController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            Stage stage = (Stage) lblError.getScene().getWindow();
+            Stage stage = (Stage) txtPsswd.getScene().getWindow();
             stage.close();
         }
     }
-}
-
-        // Validar los campos y obtener el mensaje de error, si existe
-        String validationError = validarCampos(email, password);
-
-        if (validationError != null) {
-            mostrarAlerta("Error", validationError);
-            return;  // Salir del método si hay errores
-        }
-
-        // Comprobar credenciales (email y contraseña correctos)
-        if (email.equals("usuario") && password.equals("contraseña")) {
-            SignUpSignIn.navegarVentanas("MainDashboardFXML.fxml");
-        } else {
-            mostrarAlerta("Error", "Email o contraseña incorrectos.");
-        }
-    }
-
     // Validar los campos y devolver los mensajes de error si los hay
     private String validarCampos(String email, String password) {
         StringBuilder errorMessage = new StringBuilder();
@@ -136,3 +140,4 @@ public class SignInFXMLController {
         return matcher.matches();
     }
 }
+
