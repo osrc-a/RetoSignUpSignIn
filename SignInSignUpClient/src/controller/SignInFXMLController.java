@@ -37,6 +37,7 @@ public class SignInFXMLController {
 
     // Expresión regular para validar contraseña
   private static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+  
     @FXML
     private void handleLogin() throws Exception {
         String email = txtEmail.getText();
