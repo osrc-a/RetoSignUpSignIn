@@ -46,9 +46,7 @@ public class SignUpFXMLController{
 
     @FXML
     private PasswordField tfpContrasena2;
-    
-    @FXML
-    private DatePicker fechaNac;
+   
 
     @FXML
     private void registro(ActionEvent event) {

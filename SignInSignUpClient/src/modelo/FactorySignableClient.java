@@ -9,11 +9,7 @@ package modelo;
  * @author 2dam
  */
 public class FactorySignableClient {
-    
-    
-    
-    
-    
+   
     public static Signable getSignable(){
         return new ClientSocket();
        
