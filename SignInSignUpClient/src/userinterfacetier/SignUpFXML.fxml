@@ -49,10 +49,10 @@
                 <Label alignment="TOP_CENTER" prefHeight="18.0" prefWidth="133.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Confirmar Contraseña" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 <PasswordField fx:id="tfpContrasena" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                 <PasswordField fx:id="tfpContrasena2" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <TextField GridPane.columnIndex="2" GridPane.rowIndex="6" />
-            <TextField GridPane.columnIndex="2" GridPane.rowIndex="7" />
-            <TextField GridPane.columnIndex="2" GridPane.rowIndex="8" />
-            <TextField GridPane.columnIndex="2" GridPane.rowIndex="9" />
+            <TextField fx:id="tfCalle" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+            <TextField fx:id="tfCodigoPostal" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+            <TextField fx:id="tfCiudad" GridPane.columnIndex="2" GridPane.rowIndex="8" />
+            <TextField fx:id="tfTelefono" GridPane.columnIndex="2" GridPane.rowIndex="9" />
             <CheckBox mnemonicParsing="false" prefHeight="18.0" prefWidth="126.0" text="Activo" textFill="#fffdfd" GridPane.columnIndex="2" GridPane.rowIndex="10" />
             <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="112.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Calle" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Label alignment="TOP_CENTER" prefHeight="18.0" prefWidth="116.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Codigo Postal" GridPane.columnIndex="1" GridPane.rowIndex="7" />
