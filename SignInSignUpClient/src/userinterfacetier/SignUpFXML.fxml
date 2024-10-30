@@ -53,7 +53,7 @@
             <TextField fx:id="tfCodigoPostal" GridPane.columnIndex="2" GridPane.rowIndex="7" />
             <TextField fx:id="tfCiudad" GridPane.columnIndex="2" GridPane.rowIndex="8" />
             <TextField fx:id="tfTelefono" GridPane.columnIndex="2" GridPane.rowIndex="9" />
-            <CheckBox mnemonicParsing="false" prefHeight="18.0" prefWidth="126.0" text="Activo" textFill="#fffdfd" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+            <CheckBox fx:id="chActivo" mnemonicParsing="false" prefHeight="18.0" prefWidth="126.0" text="Activo" textFill="#fffdfd" GridPane.columnIndex="2" GridPane.rowIndex="10" />
             <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="112.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Calle" GridPane.columnIndex="1" GridPane.rowIndex="6" />
             <Label alignment="TOP_CENTER" prefHeight="18.0" prefWidth="116.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Codigo Postal" GridPane.columnIndex="1" GridPane.rowIndex="7" />
             <Label alignment="TOP_CENTER" prefHeight="18.0" prefWidth="122.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Ciudad" GridPane.columnIndex="1" GridPane.rowIndex="8" />
