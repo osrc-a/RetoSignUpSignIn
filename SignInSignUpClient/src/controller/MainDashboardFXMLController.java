@@ -13,7 +13,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -22,27 +21,33 @@ import userinterfacetier.ContextMenuManager;
 
 public class MainDashboardFXMLController implements Initializable {
 
+
+    /**
+     * Initializes the controller class.
+     * @param url
+     * @param rb
+     */
+    
+
     @FXML
-    private Label lbbienvenido;
+    private Label lbBienvenido;
 
     @FXML
     private AnchorPane pane; // Asegúrate de que este es el ID de tu AnchorPane en el FXML.
 
     private ContextMenuManager contextMenuManager;
 
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Verifica que los elementos @FXML no sean nulos
-        if (pane == null || lbbienvenido == null) {
-            throw new IllegalStateException("El FXML no se ha inicializado correctamente.");
-        }
-
+    
         // Inicializar el ContextMenuManager
         contextMenuManager = new ContextMenuManager(pane);
 
         // Configurar el evento al cerrar la ventana
         Platform.runLater(() -> {
-            Stage stage = (Stage) lbbienvenido.getScene().getWindow();
+            Stage stage = (Stage) lbBienvenido.getScene().getWindow();
             stage.setOnCloseRequest(event -> {
                 event.consume();  // Consumir el evento para manejarlo manualmente
                 handleClose();
@@ -58,7 +63,7 @@ public class MainDashboardFXMLController implements Initializable {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            Stage stage = (Stage) lbbienvenido.getScene().getWindow();
+            Stage stage = (Stage) lbBienvenido.getScene().getWindow();
             stage.close();
         }
     }

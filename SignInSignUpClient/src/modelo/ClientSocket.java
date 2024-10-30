@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package modelo;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -72,7 +71,8 @@ public class ClientSocket implements Signable {
             System.err.println("Error al intentar iniciar sesión: " + e.getMessage());
             throw e;
         }
-
-    }
+}
     
 }
+
+
