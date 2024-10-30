@@ -5,18 +5,17 @@
  */
 
 package controller;
-
-
 import java.util.Optional;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
@@ -41,7 +40,8 @@ public class SignUpFXMLController{
 
     @FXML
     private TextField tfApellido;
-
+    @FXML
+    private Button btnCrearCuenta;
     @FXML
     private PasswordField tfpContrasena;
 
@@ -57,66 +57,34 @@ public class SignUpFXMLController{
     private PasswordField tfTelefono;
    @FXML
     private CheckBox chActivo;
-
+  
     @FXML
-    private void registro(ActionEvent event) {
-        if (isImputValid() ) {
-        try {
-                 Usuario usu = new Usuario();
-         
-                 usu.setEmail(tfEmail.getText());
-            usu.setContrasena(tfpContrasena.getText()); 
-            usu.setNombre(tfNombre.getText());
-            usu.setApellido(tfApellido.getText());
-            usu.setCalle(tfCalle.getText());
-            usu.setCodigoPostal(tfCodigoPostal.getText());
-            usu.setCiudad(tfCiudad.getText());
-            usu.getTelefono();
-            usu.setActivo(chActivo.isSelected());
-            
-                FactorySignableClient.getSignable().registrar(usu);
-                } catch (Exception ex) {
-                Logger.getLogger(SignUpFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
+    private void btnCrearCuenta(ActionEvent event) throws Exception  {
+       
+         String email=tfEmail.getText();
+         String contrasena=tfpContrasena.getText();
+         String contrasena2 =tfpContrasena2.getText();
+         String nombre=tfNombre.getText();
+         String apellido= tfApellido.getText();
+         String calle=tfCalle.getText();
+         String codigoPostal=tfCodigoPostal.getText();
+         String ciudad=tfCiudad.getText();
+         String telefono=tfTelefono.getText();
+         Boolean activo=chActivo.isSelected();
+       
+            String validationError = validarCampos(email, contrasena, contrasena2, nombre , apellido, calle, codigoPostal, ciudad, telefono, activo);
+            if (validationError!= null) {
+                mostrarAlert("Error", validationError);
+              // Salir del método si hay errores
+              }else{
+                insercionDeDatos();
+            }      
     }
-private boolean isImputValid(){
-    String errorMessage = "";
-    if (!chActivo.isSelected()) {
-        errorMessage += "Si te registras como no activo entonces no podras iniciar secion."; 
-    }
-    if (!tfpContrasena.getText().equalsIgnoreCase(tfpContrasena2.getText())) {
-        errorMessage +="Las contraseñas no coinciden";
-    }
-    if (tfCodigoPostal.getText() == null || tfCodigoPostal.getText().length() == 0) {
-        errorMessage +="Codigo postal no valido";
-        
-    }else{
-     try {
-                Integer.parseInt(tfCodigoPostal.getText());
-            } catch (NumberFormatException e) {
-                errorMessage += "Codigo postal no valido"+"(Deben ser numeros)\n"; 
-            }
-     if (errorMessage.length() == 0) {
-            return true;
-        } else {
-            // Show the error message.
-            Alert alert = new Alert(AlertType.ERROR);
-            //alert.initOwner(dialogStage);
-            alert.setTitle("Campos no validos");
-            alert.setHeaderText("Por favor ingresa los valores correctos");
-            alert.setContentText(errorMessage);
-            alert.showAndWait();
-    }
-    }
-        return false;
-}
-    
-
     @FXML
     private void irASignIn() throws Exception {
         SignUpSignIn.navegarVentanas("SignInFXML.fxml");
     }
+    
     public void initialize() {
         // Se usa Platform.runLater() para asegurarse de que el Stage esté inicializado
         Platform.runLater(() -> {
@@ -145,4 +113,52 @@ private boolean isImputValid(){
         }
     }
 
-}
+    private String validarCampos(String email, String contrasena, String contrasena2, String nombre, String apellido, String calle, String codigoPostal, String ciudad, String telefono, Boolean activo) {
+
+            StringBuilder errorMessage = new StringBuilder();
+
+    if (chActivo.isSelected()) {
+        errorMessage.append( "Si te registras como no activo entonces no podras iniciar secion.");
+        }else  if (!contrasena.equalsIgnoreCase(contrasena2)) {
+        errorMessage.append("Las contraseñas no coinciden");
+        }else   if (codigoPostal == null || codigoPostal.length() == 0) {
+        errorMessage.append("Codigo postal no valido");
+        }else{
+     try { 
+                    Integer.parseInt(codigoPostal);
+                } catch (NumberFormatException e) {
+                    errorMessage.append("Codigo postal no valido (Deben ser numeros)\n");
+                }
+            }
+            return errorMessage.length() > 0 ? errorMessage.toString() : null;
+            }
+private void  mostrarAlert(String titulo, String mensaje) {
+// Show the error message.
+            Alert alert = new Alert(AlertType.ERROR);
+          alert.setTitle(titulo);
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+       }
+
+    private void insercionDeDatos() {
+        try{
+           
+          Usuario usu = new Usuario();
+                    usu.setEmail(tfEmail.getText());
+                        usu.setContrasena(tfpContrasena.getText()); 
+                        usu.setNombre(tfNombre.getText());
+                        usu.setApellido(tfApellido.getText());
+                        usu.setCalle(tfCalle.getText());
+                        usu.setCodigoPostal(tfCodigoPostal.getText());
+                        usu.setCiudad(tfCiudad.getText());
+                        usu.setTelefono(tfTelefono.getText());
+                        usu.setActivo(chActivo.isSelected());
+                        FactorySignableClient.getSignable().registrar(usu);
+                } catch (Exception ex) {
+                Logger.getLogger(SignUpFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+    }
+
+
