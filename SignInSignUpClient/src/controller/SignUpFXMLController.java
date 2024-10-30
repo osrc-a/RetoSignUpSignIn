@@ -41,8 +41,6 @@ public class SignUpFXMLController{
     @FXML
     private TextField tfApellido;
     @FXML
-    private Button btnCrearCuenta;
-    @FXML
     private PasswordField tfpContrasena;
 
     @FXML
@@ -59,7 +57,7 @@ public class SignUpFXMLController{
     private CheckBox chActivo;
   
     @FXML
-    private void btnCrearCuenta(ActionEvent event) throws Exception  {
+    private void registro(ActionEvent event) throws Exception  {
        
          String email=tfEmail.getText();
          String contrasena=tfpContrasena.getText();
