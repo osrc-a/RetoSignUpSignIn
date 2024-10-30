@@ -22,48 +22,40 @@ import userinterfacetier.SignUpSignIn;
  *
  * @author 2dam
  */
-
 public class SignInFXMLController {
-    
-    
-
 
     @FXML
     private TextField txtEmail;
     @FXML
     private PasswordField txtPsswd;
 
-
     // Expresión regular para validar email
-    private static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@" +
-            "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+    private static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@"
+            + "(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 
     // Expresión regular para validar contraseña
-    private static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{6,}$";
-
+  private static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
+  
     @FXML
     private void handleLogin() throws Exception {
         String email = txtEmail.getText();
         String password = txtPsswd.getText();
-        
+
         // Validar los campos y obtener el mensaje de error, si existe
-        String validationError = validarCampos(email, password);
+    String validationError = validarCampos(email, password);
 
-        if (validationError != null) {
+
+    if (validationError!= null) {
             mostrarAlerta("Error", validationError);
-            return;  // Salir del método si hay errores
-        }
-
-        // Comprobar credenciales (email y contraseña correctos)
-        if (email.equals("oscardan@gmx.es") && password.equals("abcd*1234")) {
-            SignUpSignIn.navegarVentanas("MainDashboardFXML.fxml");
-        } else {
-            mostrarAlerta("Error", "Email o contraseña incorrectos.");
-        }
+        return;  // Salir del método si hay errores
     }
-        
-
-       
+    // Comprobar credenciales (email y contraseña correctos)
+    if (email.equals ("usuario.user@gmail.com") && password.equals("Abcd*1234")) {
+            SignUpSignIn.navegarVentanas("MainDashboardFXML.fxml");
+    } else {
+            mostrarAlerta("Error", "Email o contraseña incorrectos.");
+     }
+    }
 
     @FXML
     private void irASignUp() throws Exception {
@@ -73,7 +65,9 @@ public class SignInFXMLController {
     public void initialize() {
         // Se usa Platform.runLater() para asegurarse de que el Stage esté inicializado
         Platform.runLater(() -> {
-            Stage stage = (Stage) txtPsswd.getScene().getWindow();
+
+            Stage stage = (Stage) txtEmail.getScene().getWindow();
+
             // Configuramos el evento al cerrar la ventana con la "X"
             stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
@@ -93,23 +87,21 @@ public class SignInFXMLController {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            Stage stage = (Stage) txtPsswd.getScene().getWindow();
+
+            Stage stage = (Stage) txtEmail.getScene().getWindow();
+
             stage.close();
         }
     }
-    // Validar los campos y devolver los mensajes de error si los hay
+// Validar los campos y devolver los mensajes de error si los hay
     private String validarCampos(String email, String password) {
         StringBuilder errorMessage = new StringBuilder();
 
         if (email.isEmpty() || password.isEmpty()) {
             errorMessage.append("El email o la contraseña no pueden estar vacíos.\n");
-        }
-
-        if (!comprobarEmail(email)) {
+        }else if (!comprobarEmail(email)) {
             errorMessage.append("Formato de email inválido.\n");
-        }
-
-        if (!comprobarPassword(password)) {
+        }else if (!comprobarPassword(password)) {
             errorMessage.append("La contraseña debe tener al menos 6 caracteres, con al menos una mayúscula, una minúscula y un número.\n");
         }
 

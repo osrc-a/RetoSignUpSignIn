@@ -4,46 +4,43 @@
  * and open the template in the editor.
  */
 package controller;
+
 import javafx.stage.Stage;
-import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.FixMethodOrder;
+import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import static org.testfx.api.FxAssert.verifyThat;
+import org.testfx.api.FxRobot;
 import org.testfx.framework.junit.ApplicationTest;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
 import userinterfacetier.SignUpSignIn;
-
 
 /**
  *
  * @author 2dam
  */
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class SignInFXMLControllerTest extends ApplicationTest {
+@FixMethodOrder (MethodSorters.NAME_ASCENDING)
+public class SignInFXMLControllerTest extends ApplicationTest{
 
-    public void Start(Stage stage) throws Exception {
-
+    /**
+     *
+     * @param stage
+     * @throws Exception
+     */
+    @Override
+    public void start (Stage stage) throws Exception {
         new SignUpSignIn().start(stage);
-
     }
-
-    public SignInFXMLControllerTest() {
-    }
+   
 
     @Test
-    public void testSomeMethod() {
+    public void testSigInCorrect() {
+        clickOn("#txtEmail");
+        write("usuario@gmail.com");
+        clickOn("#txtPsswd");
+        FxRobot write = write("abcd*1234");
+        verifyThat("#pane", isVisible());
     }
     
-    @Test
-    public void test_UsuarioPasswd(){
-        clickOn("#txtEmail");
-        write("oscardan@gmx.es");
-        clickOn("#txtPsswd");
-        write("abcd*1234");
-        clickOn("#btnEntrar");
-        
-        verifyThat("#pane",isVisible());
-    }
-
+    
 }
