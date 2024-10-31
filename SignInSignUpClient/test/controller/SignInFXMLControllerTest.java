@@ -19,8 +19,8 @@ import userinterfacetier.SignUpSignIn;
  *
  * @author 2dam
  */
-@FixMethodOrder (MethodSorters.NAME_ASCENDING)
-public class SignInFXMLControllerTest extends ApplicationTest{
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+public class SignInFXMLControllerTest extends ApplicationTest {
 
     /**
      *
@@ -28,19 +28,27 @@ public class SignInFXMLControllerTest extends ApplicationTest{
      * @throws Exception
      */
     @Override
-    public void start (Stage stage) throws Exception {
+    public void start(Stage stage) throws Exception {
         new SignUpSignIn().start(stage);
     }
-   
 
     @Test
     public void testSigInCorrect() {
         clickOn("#txtEmail");
         write("usuario@gmail.com");
         clickOn("#txtPsswd");
-        FxRobot write = write("abcd*1234");
-        verifyThat("#pane", isVisible());
+        write("Abcd*1234");
+        clickOn("#btnEntrar");
+        verifyThat("#lbBienvenido", isVisible());
     }
-    
-    
+
+    @Test
+    public void testNavegacionEntreVentanas() {
+        clickOn("#btnCrearCuenta");
+        write("usuario@gmail.com");
+        clickOn("#txtPsswd");
+        write("Abcd*1234");
+        clickOn("#btnEntrar");
+        verifyThat("#lbBienvenido", isVisible());
+    }
 }

@@ -85,17 +85,18 @@ public class SignUpFXMLController {
     }
 
     public void initialize() {
-        // Se usa Platform.runLater() para asegurarse de que el Stage esté inicializado
-        Platform.runLater(() -> {
-            Stage stage = (Stage) tfApellido.getScene().getWindow();
-            // Configuramos el evento al cerrar la ventana con la "X"
-            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent event) {
-                    event.consume();  // Consumir el evento para manejarlo manualmente
-                    handleClose();
-                }
-            });
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Stage stage = (Stage) tfApellido.getScene().getWindow();
+                stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                    @Override
+                    public void handle(WindowEvent event) {
+                        event.consume();  // Consumir el evento para manejarlo manualmente
+                        handleClose();
+                    }
+                });
+            }
         });
     }
 

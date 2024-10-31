@@ -10,6 +10,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -17,18 +18,17 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import userinterfacetier.ContextMenuManager;
 
 public class MainDashboardFXMLController implements Initializable {
 
-
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
-    
-
     @FXML
     private Label lbBienvenido;
 
@@ -37,21 +37,26 @@ public class MainDashboardFXMLController implements Initializable {
 
     private ContextMenuManager contextMenuManager;
 
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // Verifica que los elementos @FXML no sean nulos
-    
+
         // Inicializar el ContextMenuManager
         contextMenuManager = new ContextMenuManager(pane);
 
         // Configurar el evento al cerrar la ventana
-        Platform.runLater(() -> {
-            Stage stage = (Stage) lbBienvenido.getScene().getWindow();
-            stage.setOnCloseRequest(event -> {
-                event.consume();  // Consumir el evento para manejarlo manualmente
-                handleClose();
-            });
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Stage stage = (Stage) lbBienvenido.getScene().getWindow();
+                stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                    @Override
+                    public void handle(WindowEvent event) {
+                        event.consume();  // Consumir el evento para manejarlo manualmente
+                        handleClose();
+                    }
+                });
+            }
         });
     }
 
