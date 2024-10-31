@@ -5,6 +5,7 @@
  */
 package controller;
 
+import errores.ValidationError;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,9 +21,11 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import modelo.ActionUsers;
 import modelo.FactorySignableClient;
 import modelo.Usuario;
 import userinterfacetier.SignUpSignIn;
+import utils.Actions;
 
 /**
  *
@@ -32,15 +35,12 @@ public class SignUpFXMLController {
 
     @FXML
     private TextField tfEmail;
-
     @FXML
     private TextField tfNombre;
-
     @FXML
     private TextField tfApellido;
     @FXML
     private PasswordField tfpContrasena;
-
     @FXML
     private PasswordField tfpContrasena2;
     @FXML
@@ -55,25 +55,19 @@ public class SignUpFXMLController {
     private CheckBox chActivo;
 
     @FXML
-    private void registro(ActionEvent event) throws Exception {
-
-        String email = tfEmail.getText();
-        String contrasena = tfpContrasena.getText();
-        String contrasena2 = tfpContrasena2.getText();
-        String nombre = tfNombre.getText();
-        String apellido = tfApellido.getText();
-        String calle = tfCalle.getText();
-        String codigoPostal = tfCodigoPostal.getText();
-        String ciudad = tfCiudad.getText();
-        String telefono = tfTelefono.getText();
-        Boolean activo = chActivo.isSelected();
-
-        String validationError = validarCampos(email, contrasena, contrasena2, nombre, apellido, calle, codigoPostal, ciudad, telefono, activo);
-        if (validationError != null) {
-            mostrarAlert("Error", validationError);
-            // Salir del método si hay errores
-        } else {
-            insercionDeDatos();
+    private void registro(ActionEvent event) {
+        try {
+            Usuario user = insercionDeDatos();
+            ActionUsers userr = new ActionUsers();
+            userr.setAction(Actions.REGISTER_REQUEST);
+            userr.setUser(user);
+            FactorySignableClient.getSignable().registrar(userr);
+            mostrarAlert("Éxito", "Registro exitoso."); // Show success message
+            clearFields(); // Clear fields after successful registration
+        } catch (ValidationError ex) {
+            Logger.getLogger(SignUpFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(SignUpFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -83,21 +77,16 @@ public class SignUpFXMLController {
     }
 
     public void initialize() {
-        // Se usa Platform.runLater() para asegurarse de que el Stage esté inicializado
+        // Set focus to the email field upon initialization
         Platform.runLater(() -> {
+            tfEmail.requestFocus();
             Stage stage = (Stage) tfEmail.getScene().getWindow();
-            // Configuramos el evento al cerrar la ventana con la "X"
-            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent event) {
-                    event.consume();  // Consumir el evento para manejarlo manualmente
-                    handleClose();
-                }
-            });
+            stage.setOnCloseRequest(this::handleClose);
         });
     }
 
-    private void handleClose() {
+    private void handleClose(WindowEvent event) {
+        event.consume();  // Consume the event to handle manually
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmación");
         alert.setHeaderText("¿Está seguro de que desea cerrar la aplicación?");
@@ -110,51 +99,84 @@ public class SignUpFXMLController {
         }
     }
 
-    private String validarCampos(String email, String contrasena, String contrasena2, String nombre, String apellido, String calle, String codigoPostal, String ciudad, String telefono, Boolean activo) {
-
+    private String validarCampos(String email, String contrasena, String contrasena2,
+                                 String nombre, String apellido, String calle,
+                                 String codigoPostal, String ciudad, String telefono,
+                                 Boolean activo) {
         StringBuilder errorMessage = new StringBuilder();
 
-        if (chActivo.isSelected()) {
-            errorMessage.append("Si te registras como no activo entonces no podras iniciar secion.");
-        } else if (!contrasena.equalsIgnoreCase(contrasena2)) {
-            errorMessage.append("Las contraseñas no coinciden");
-        } else if (codigoPostal == null || codigoPostal.length() == 0) {
-            errorMessage.append("Codigo postal no valido");
+        if (!activo) {
+            errorMessage.append("Si te registras como no activo, entonces no podrás iniciar sesión.\n");
+        }
+        if (!contrasena.equals(contrasena2)) {
+            errorMessage.append("Las contraseñas no coinciden.\n");
+        }
+        if (codigoPostal == null || codigoPostal.isEmpty()) {
+            errorMessage.append("Código postal no válido.\n");
         } else {
             try {
                 Integer.parseInt(codigoPostal);
             } catch (NumberFormatException e) {
-                errorMessage.append("Codigo postal no valido (Deben ser numeros)\n");
+                errorMessage.append("Código postal no válido (Deben ser números).\n");
             }
         }
+        if (!isValidEmail(email)) {
+            errorMessage.append("Formato de email no válido.\n");
+        }
+
         return errorMessage.length() > 0 ? errorMessage.toString() : null;
     }
 
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$";
+        return email.matches(emailRegex);
+    }
+
     private void mostrarAlert(String titulo, String mensaje) {
-// Show the error message.
-        Alert alert = new Alert(AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();
     }
 
-    private void insercionDeDatos() {
-        try {
+    private Usuario insercionDeDatos() throws ValidationError {
+        Usuario usu = new Usuario();
+        String validationError = validarCampos(tfEmail.getText(),
+                tfpContrasena.getText(), tfpContrasena2.getText(),
+                tfNombre.getText(), tfApellido.getText(), tfCalle.getText(),
+                tfCodigoPostal.getText(), tfCiudad.getText(),
+                tfTelefono.getText(), chActivo.isSelected());
 
-            Usuario usu = new Usuario();
-            usu.setEmail(tfEmail.getText());
-            usu.setContrasena(tfpContrasena.getText());
-            usu.setNombre(tfNombre.getText());
-            usu.setApellido(tfApellido.getText());
-            usu.setCalle(tfCalle.getText());
-            usu.setCodigoPostal(tfCodigoPostal.getText());
-            usu.setCiudad(tfCiudad.getText());
-            usu.setTelefono(tfTelefono.getText());
-            usu.setActivo(chActivo.isSelected());
-            FactorySignableClient.getSignable().registrar(usu);
-        } catch (Exception ex) {
-            Logger.getLogger(SignUpFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        if (validationError != null) {
+            mostrarAlert("Error", validationError);
+            throw new ValidationError("Los campos introducidos tienen un formato incorrecto.");
         }
+
+        usu.setEmail(tfEmail.getText());
+        usu.setContrasena(tfpContrasena.getText());
+        usu.setNombre(tfNombre.getText());
+        usu.setApellido(tfApellido.getText());
+        usu.setCalle(tfCalle.getText());
+        usu.setCodigoPostal(tfCodigoPostal.getText());
+        usu.setTelefono(tfTelefono.getText());
+        usu.setCiudad(tfCiudad.getText());
+        usu.setActivo(chActivo.isSelected());
+
+        return usu;
+    }
+
+    private void clearFields() {
+        // Clear all input fields after successful registration
+        tfEmail.clear();
+        tfpContrasena.clear();
+        tfpContrasena2.clear();
+        tfNombre.clear();
+        tfApellido.clear();
+        tfCalle.clear();
+        tfCodigoPostal.clear();
+        tfCiudad.clear();
+        tfTelefono.clear();
+        chActivo.setSelected(false);
     }
 }

@@ -11,9 +11,11 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import utils.UserAction;
+import utils.Actions;
+import utils.Errores;
 
 public class ClientSocket implements Signable {
+
     private final int PUERTO = 5000;
     private final String IP = "127.0.0.1";
     private Socket socket;
@@ -28,9 +30,15 @@ public class ClientSocket implements Signable {
 
     private void cerrarConexion() {
         try {
-            if (entrada != null) entrada.close();
-            if (salida != null) salida.close();
-            if (socket != null) socket.close();
+            if (entrada != null) {
+                entrada.close();
+            }
+            if (salida != null) {
+                salida.close();
+            }
+            if (socket != null) {
+                socket.close();
+            }
             System.out.println("Conexión cerrada.");
         } catch (IOException e) {
             Logger.getLogger(ClientSocket.class.getName()).log(Level.SEVERE, "Error al cerrar conexión", e);
@@ -38,41 +46,25 @@ public class ClientSocket implements Signable {
     }
 
     @Override
-    public void registrar(Usuario user) {
+    public ActionUsers registrar(ActionUsers user) throws Errores.DatabaseConnectionException {
+        ActionUsers mensaje = null;
         try {
             iniciarConexion();
-            salida.writeObject(UserAction.REGISTER_REQUEST); // Envía un comando estandarizado
+            mensaje = (ActionUsers) entrada.readObject();
             salida.writeObject(user);
-            String mensaje = (String) entrada.readObject();
-            System.out.println(mensaje);
+            if(mensaje.getAction().equals(Actions.DATABASE_FAILED)) {
+                throw new Errores.DatabaseConnectionException("");
+            }
         } catch (IOException | ClassNotFoundException e) {
             Logger.getLogger(ClientSocket.class.getName()).log(Level.SEVERE, "Error en registro", e);
         } finally {
             cerrarConexion();
         }
+        return mensaje;
     }
 
     @Override
-    public Usuario login(Usuario user) throws Exception {
-        try {
-            iniciarConexion();
-            salida.writeObject(UserAction.LOGIN_REQUEST); // Enviar comando de login
-            salida.writeObject(user);
-
-            Object response = entrada.readObject();
-            if (response instanceof Usuario) {
-                Usuario loggedInUser = (Usuario) response;
-                System.out.println("Login exitoso para usuario: " + loggedInUser.getNombre());
-                return loggedInUser;
-            } else {
-                System.out.println("Error en el inicio de sesión.");
-                return null;
-            }
-        } catch (IOException | ClassNotFoundException e) {
-            Logger.getLogger(ClientSocket.class.getName()).log(Level.SEVERE, "Error al intentar iniciar sesión", e);
-            throw e;
-        } finally {
-            cerrarConexion();
-        }
+    public ActionUsers login(Usuario user) throws Exception {
+        return null;
     }
 }
