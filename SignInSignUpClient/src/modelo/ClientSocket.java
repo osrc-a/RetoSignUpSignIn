@@ -4,75 +4,67 @@
  * and open the template in the editor.
  */
 package modelo;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import utils.Actions;
+import utils.Errores;
 
-/**
- *
- * @author 2dam
- */
 public class ClientSocket implements Signable {
 
     private final int PUERTO = 5000;
     private final String IP = "127.0.0.1";
+    private Socket socket;
+    private ObjectOutputStream salida;
+    private ObjectInputStream entrada;
 
-    @Override
-    public void registrar(Usuario user) {
-        Socket socket = null;
-        ObjectInputStream entrada = null;
-        ObjectOutputStream salida = null;
+    private void iniciarConexion() throws IOException {
+        socket = new Socket(IP, PUERTO);
+        salida = new ObjectOutputStream(socket.getOutputStream());
+        entrada = new ObjectInputStream(socket.getInputStream());
+    }
 
+    private void cerrarConexion() {
         try {
-            socket = new Socket(IP, PUERTO);
-            salida = new ObjectOutputStream(socket.getOutputStream());
-            entrada = new ObjectInputStream(socket.getInputStream());
-            String mensaje = (String) entrada.readObject();
-            System.out.println(mensaje);
-            
-            
-            System.out.println("Mandando usuario");
-            salida.writeObject(user);
-            
-            
-        } catch (IOException ex) {
-            Logger.getLogger(ClientSocket.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClientSocket.class.getName()).log(Level.SEVERE, null, ex);
+            if (entrada != null) {
+                entrada.close();
+            }
+            if (salida != null) {
+                salida.close();
+            }
+            if (socket != null) {
+                socket.close();
+            }
+            System.out.println("Conexión cerrada.");
+        } catch (IOException e) {
+            Logger.getLogger(ClientSocket.class.getName()).log(Level.SEVERE, "Error al cerrar conexión", e);
         }
-
     }
 
     @Override
- public Usuario login(Usuario user) throws Exception {
-        try (Socket socket = new Socket(IP, PUERTO);
-                ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
-                ObjectInputStream input = new ObjectInputStream(socket.getInputStream())) {
-
-            // Enviar solicitud de inicio de sesión con el objeto Usuario
-            output.writeObject("LOGIN"); // Identificador de operación 
-            output.writeObject(user); // Usuario con username y password
-
-            // Recibir respuesta del servidor
-            Object response = input.readObject();
-
-            if (response instanceof Usuario) {
-                Usuario loggedInUser = (Usuario) response;
-                System.out.println("Login exitoso para usuario: " + loggedInUser.getNombre());
-                return loggedInUser; // Retorna el usuario validado
-            } else {
-                System.out.println("Error en el inicio de sesión.");
-                return null;
+    public ActionUsers registrar(ActionUsers user) throws Errores.DatabaseConnectionException {
+        ActionUsers mensaje = null;
+        try {
+            iniciarConexion();
+            mensaje = (ActionUsers) entrada.readObject();
+            salida.writeObject(user);
+            if(mensaje.getAction().equals(Actions.DATABASE_FAILED)) {
+                throw new Errores.DatabaseConnectionException("");
             }
-        } catch (Exception e) {
-            System.err.println("Error al intentar iniciar sesión: " + e.getMessage());
-            throw e;
+        } catch (IOException | ClassNotFoundException e) {
+            Logger.getLogger(ClientSocket.class.getName()).log(Level.SEVERE, "Error en registro", e);
+        } finally {
+            cerrarConexion();
         }
-}
-    
-}
+        return mensaje;
+    }
 
-
+    @Override
+    public ActionUsers login(Usuario user) throws Exception {
+        return null;
+    }
+}
