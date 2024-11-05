@@ -77,21 +77,14 @@ public class SignUpFXMLController {
     }
 
     public void initialize() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                Stage stage = (Stage) tfApellido.getScene().getWindow();
-                stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                    @Override
-                    public void handle(WindowEvent event) {
-                        event.consume();  // Consumir el evento para manejarlo manualmente
-                        handleClose();
-                    }
-                });
-            }
+        // Set focus to the email field upon initialization
+        Platform.runLater(() -> {
+            tfEmail.requestFocus();
+            Stage stage = (Stage) tfEmail.getScene().getWindow();
+            stage.setOnCloseRequest(this::handleClose);
+        });
     }
- }
-                          
+
     private void handleClose(WindowEvent event) {
         event.consume();  // Consume the event to handle manually
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
