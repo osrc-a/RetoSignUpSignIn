@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="pane" prefHeight="594.0" prefWidth="789.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SignUpFXMLController">
+<AnchorPane id="pane" prefHeight="594.0" prefWidth="789.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SignUpFXMLController">
     <children>
-        <GridPane id="pane" layoutX="1.0" maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="658.0" prefWidth="861.0" stylesheets="@../resources/SignInSignUpClient.css">
+        <GridPane id="pane" layoutX="1.0" maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="658.0" prefWidth="861.0" stylesheets="@../resources/css/SignInSignUpClient.css">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="229.79998779296875" minWidth="10.0" prefWidth="110.39999542236328" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="244.00001678466796" minWidth="10.0" prefWidth="145.400048828125" />

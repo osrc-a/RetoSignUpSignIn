@@ -23,6 +23,8 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import modelo.ActionUsers;
 import modelo.FactorySignableClient;
 import modelo.Usuario;
@@ -57,21 +59,15 @@ public class SignInFXMLController {
             user.setContrasena(password);
             userr.setAction(Actions.LOGGING_REQUEST);
             userr.setUser(user);
-            FactorySignableClient.getSignable().login(userr);
-            SignUpSignIn.navegarVentanas("MainDashboardFXML.fxml");
-        } catch (Errores.DatabaseConnectionException ex) {
-            Logger.getLogger(SignInFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-            new Alert(Alert.AlertType.ERROR, ex.getMessage()).showAndWait();
-        } catch (Errores.UserAlreadyExistsException ex) {
-            Logger.getLogger(SignInFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-            new Alert(Alert.AlertType.ERROR, ex.getMessage()).showAndWait();
-        } catch (Errores.ServerConnectionException ex) {
-            Logger.getLogger(SignInFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-            new Alert(Alert.AlertType.ERROR, ex.getMessage()).showAndWait();
-        } catch (Errores.AuthenticationFailedException ex) {
-            Logger.getLogger(SignInFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-            new Alert(Alert.AlertType.ERROR, ex.getMessage()).showAndWait();
-        } catch (Errores.PropertiesFileException ex) {
+            userr = FactorySignableClient.getSignable().login(userr);
+            if (userr.getUser().getActivo()) {
+                SignUpSignIn.navegarVentanas("MainDashboardFXML.fxml");
+                
+            } else {
+                new Alert(Alert.AlertType.INFORMATION, "El usuario no esta activo").showAndWait();
+            }
+
+        } catch (Errores.DatabaseConnectionException | Errores.UserAlreadyExistsException | Errores.ServerConnectionException | Errores.AuthenticationFailedException | Errores.PropertiesFileException ex) {
             Logger.getLogger(SignInFXMLController.class.getName()).log(Level.SEVERE, null, ex);
             new Alert(Alert.AlertType.ERROR, ex.getMessage()).showAndWait();
         } catch (Exception ex) {
