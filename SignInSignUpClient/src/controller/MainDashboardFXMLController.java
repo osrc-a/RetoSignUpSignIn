@@ -17,6 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import modelo.Usuario;
 import userinterfacetier.ContextMenuManager;
+import userinterfacetier.SignUpSignIn;
 
 public class MainDashboardFXMLController implements Initializable {
 
@@ -39,7 +40,6 @@ public class MainDashboardFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // Configura la columna para mostrar los datos de cada TreeItem
         columnaDatos.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue()));
-        
 
         // Inicializa el usuario con datos de prueba
         usuario = new Usuario();
@@ -104,5 +104,22 @@ public class MainDashboardFXMLController implements Initializable {
         // Configuramos el TreeTableView
         treeTableView.setRoot(rootItem);
         treeTableView.setShowRoot(false);
+    }
+
+    @FXML
+    private void irASignIn() throws Exception {
+        // Crear un Alert de tipo CONFIRMATION
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Cerrar Sesión");
+        alert.setHeaderText(null);
+        alert.setContentText("¿Está seguro de que desea cerrar sesión?");
+
+        // Mostrar el Alert y esperar la respuesta
+        Optional<ButtonType> result = alert.showAndWait();
+
+        // Comprobar si se presionó "OK"
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            SignUpSignIn.navegarVentanas("SignInFXML.fxml");
+        }
     }
 }
