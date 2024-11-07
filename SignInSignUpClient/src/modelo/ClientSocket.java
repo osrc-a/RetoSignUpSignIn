@@ -44,21 +44,19 @@ public class ClientSocket implements Signable {
             if (socket != null) {
                 socket.close();
             }
-            System.out.println("Conexión cerrada.");
         } catch (IOException e) {
             Logger.getLogger(ClientSocket.class.getName()).log(Level.SEVERE, "Error al cerrar conexión", e);
         }
     }
 
-    
     public ActionUsers conexion(ActionUsers user) throws DatabaseConnectionException, UserAlreadyExistsException, ServerConnectionException, AuthenticationFailedException, PropertiesFileException {
-       
+
         try {
             iniciarConexion();
-            
+
             salida.writeObject(user);
             user = (ActionUsers) entrada.readObject();
-            switch (user.getAction()){
+            switch (user.getAction()) {
                 case LOGGING_OK:
                     return user;
                 case REGISTER_OK:
@@ -74,7 +72,7 @@ public class ClientSocket implements Signable {
                 case PROPERTIESFILE_FAILED:
                     throw new Errores.ServerConnectionException("IP, URL, o CONTRASEÑA INVALIDA, cambia el archivo de propiedades.");
             }
-            
+
         } catch (IOException | ClassNotFoundException e) {
             Logger.getLogger(ClientSocket.class.getName()).log(Level.SEVERE, "Error en registro", e);
         } finally {
@@ -85,16 +83,14 @@ public class ClientSocket implements Signable {
 
     @Override
     public ActionUsers registrar(ActionUsers user) throws DatabaseConnectionException, UserAlreadyExistsException, ServerConnectionException, AuthenticationFailedException, PropertiesFileException {
-            return conexion(user);
- 
+        return conexion(user);
+
     }
 
     @Override
-    public ActionUsers login(ActionUsers user) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ActionUsers login(ActionUsers user) throws DatabaseConnectionException, UserAlreadyExistsException, ServerConnectionException, AuthenticationFailedException, PropertiesFileException {
+        user=conexion(user);
+        return user;
     }
 
-   
-
-   
 }

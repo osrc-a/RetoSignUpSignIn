@@ -39,6 +39,7 @@ public class MainDashboardFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // Configura la columna para mostrar los datos de cada TreeItem
         columnaDatos.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue()));
+        
 
         // Inicializa el usuario con datos de prueba
         usuario = new Usuario();

@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane fx:id="pane" cache="true" prefHeight="500.0" prefWidth="600.0"
-            stylesheets="@../resources/SignInSignUpClient.css"
+            stylesheets="@../resources/css/SignInSignUpClient.css"
             xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="controller.MainDashboardFXMLController">
