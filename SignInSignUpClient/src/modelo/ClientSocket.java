@@ -13,6 +13,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import utils.Actions;
 import utils.Errores;
+import utils.Errores.AuthenticationFailedException;
+import utils.Errores.DatabaseConnectionException;
+import utils.Errores.PropertiesFileException;
+import utils.Errores.ServerConnectionException;
+import utils.Errores.UserAlreadyExistsException;
 
 public class ClientSocket implements Signable {
 
@@ -45,26 +50,51 @@ public class ClientSocket implements Signable {
         }
     }
 
-    @Override
-    public ActionUsers registrar(ActionUsers user) throws Errores.DatabaseConnectionException {
-        ActionUsers mensaje = null;
+    
+    public ActionUsers conexion(ActionUsers user) throws DatabaseConnectionException, UserAlreadyExistsException, ServerConnectionException, AuthenticationFailedException, PropertiesFileException {
+       
         try {
             iniciarConexion();
-            mensaje = (ActionUsers) entrada.readObject();
+            
             salida.writeObject(user);
-            if(mensaje.getAction().equals(Actions.DATABASE_FAILED)) {
-                throw new Errores.DatabaseConnectionException("");
+            user = (ActionUsers) entrada.readObject();
+            switch (user.getAction()){
+                case LOGGING_OK:
+                    return user;
+                case REGISTER_OK:
+                    return user;
+                case DATABASE_FAILED:
+                    throw new Errores.DatabaseConnectionException("Error con la base de datos");
+                case RESGISTER_FAILED:
+                    throw new Errores.UserAlreadyExistsException("El usuario ya existe");
+                case LOGGING_FAILED:
+                    throw new Errores.AuthenticationFailedException("No existe usuario con esas credenciales");
+                case SERVER_FAILED:
+                    throw new Errores.ServerConnectionException("Fallo al abrir el servidor.");
+                case PROPERTIESFILE_FAILED:
+                    throw new Errores.ServerConnectionException("IP, URL, o CONTRASEÑA INVALIDA, cambia el archivo de propiedades.");
             }
+            
         } catch (IOException | ClassNotFoundException e) {
             Logger.getLogger(ClientSocket.class.getName()).log(Level.SEVERE, "Error en registro", e);
         } finally {
             cerrarConexion();
         }
-        return mensaje;
+        return user;
     }
 
     @Override
-    public ActionUsers login(Usuario user) throws Exception {
-        return null;
+    public ActionUsers registrar(ActionUsers user) throws DatabaseConnectionException, UserAlreadyExistsException, ServerConnectionException, AuthenticationFailedException, PropertiesFileException {
+            return conexion(user);
+ 
     }
+
+    @Override
+    public ActionUsers login(ActionUsers user) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+   
+
+   
 }

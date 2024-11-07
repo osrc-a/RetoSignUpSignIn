@@ -5,7 +5,6 @@
  */
 package controller;
 
-import errores.ValidationError;
 import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,7 +13,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
@@ -26,6 +24,7 @@ import modelo.FactorySignableClient;
 import modelo.Usuario;
 import userinterfacetier.SignUpSignIn;
 import utils.Actions;
+import utils.Errores;
 
 /**
  *
@@ -55,19 +54,27 @@ public class SignUpFXMLController {
     private CheckBox chActivo;
 
     @FXML
-    private void registro(ActionEvent event) {
+    private void registro(ActionEvent event) throws  ExceptionInInitializerError{
         try {
-            Usuario user = insercionDeDatos();
-            ActionUsers userr = new ActionUsers();
-            userr.setAction(Actions.REGISTER_REQUEST);
-            userr.setUser(user);
-            FactorySignableClient.getSignable().registrar(userr);
-            mostrarAlert("Éxito", "Registro exitoso."); // Show success message
-            clearFields(); // Clear fields after successful registration
-        } catch (ValidationError ex) {
+
+            if (comprobarDatos()) {
+                Usuario user = insercionDeDatos();
+                ActionUsers userr = new ActionUsers();
+
+                userr.setAction(Actions.REGISTER_REQUEST);
+                userr.setUser(user);
+                if (chActivo.isSelected() || mostrarAlert("Cuidado", "Si dejas la casilla activo sin marcar no podras iniciar sesion")) {
+                    FactorySignableClient.getSignable().registrar(userr);
+                    new Alert(Alert.AlertType.INFORMATION, "Registro existoso").showAndWait();
+                    clearFields();
+
+                }
+
+            }
+        } catch (Errores.DatabaseConnectionException | Errores.UserAlreadyExistsException | Errores.ServerConnectionException | Errores.PropertiesFileException | Errores.AuthenticationFailedException ex) {
             Logger.getLogger(SignUpFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(SignUpFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            new Alert(Alert.AlertType.ERROR, ex.getMessage()).showAndWait();
+
         }
     }
 
@@ -76,82 +83,40 @@ public class SignUpFXMLController {
         SignUpSignIn.navegarVentanas("SignInFXML.fxml");
     }
 
-    public void initialize() {
-        // Set focus to the email field upon initialization
-        Platform.runLater(() -> {
-            tfEmail.requestFocus();
-            Stage stage = (Stage) tfEmail.getScene().getWindow();
-            stage.setOnCloseRequest(this::handleClose);
-        });
-    }
-
-    private void handleClose(WindowEvent event) {
-        event.consume();  // Consume the event to handle manually
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmación");
-        alert.setHeaderText("¿Está seguro de que desea cerrar la aplicación?");
-        alert.setContentText("Todos los cambios no guardados se perderán.");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            Stage stage = (Stage) tfEmail.getScene().getWindow();
-            stage.close();
-        }
-    }
-
-    private String validarCampos(String email, String contrasena, String contrasena2,
-                                 String nombre, String apellido, String calle,
-                                 String codigoPostal, String ciudad, String telefono,
-                                 Boolean activo) {
-        StringBuilder errorMessage = new StringBuilder();
-
-        if (!activo) {
-            errorMessage.append("Si te registras como no activo, entonces no podrás iniciar sesión.\n");
-        }
-        if (!contrasena.equals(contrasena2)) {
-            errorMessage.append("Las contraseñas no coinciden.\n");
-        }
-        if (codigoPostal == null || codigoPostal.isEmpty()) {
-            errorMessage.append("Código postal no válido.\n");
-        } else {
-            try {
-                Integer.parseInt(codigoPostal);
-            } catch (NumberFormatException e) {
-                errorMessage.append("Código postal no válido (Deben ser números).\n");
-            }
-        }
-        if (!isValidEmail(email)) {
-            errorMessage.append("Formato de email no válido.\n");
-        }
-
-        return errorMessage.length() > 0 ? errorMessage.toString() : null;
-    }
-
     private boolean isValidEmail(String email) {
         String emailRegex = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$";
         return email.matches(emailRegex);
     }
 
-    private void mostrarAlert(String titulo, String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+    private boolean isValidPassword(String password) {
+        // Expresión regular para validar la contraseña
+        String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[A-Za-z\\d@$!%*?&]{8,}$";
+        return password.matches(passwordRegex);
+    }
+
+    private boolean isValidPhoneNumber(String phoneNumber) {
+        try {
+            // Intentar convertir el texto a un número entero
+            Integer.parseInt(phoneNumber);
+            return true; // La conversión fue exitosa, es un entero
+        } catch (NumberFormatException e) {
+            return false; // La conversión falló, no es un entero
+        }
+    }
+
+    private boolean mostrarAlert(String titulo, String mensaje) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
-        alert.showAndWait();
+
+        Optional<ButtonType> resultado = alert.showAndWait();
+
+        return resultado.isPresent() && resultado.get() == ButtonType.OK;
     }
 
-    private Usuario insercionDeDatos() throws ValidationError {
+    private Usuario insercionDeDatos() {
         Usuario usu = new Usuario();
-        String validationError = validarCampos(tfEmail.getText(),
-                tfpContrasena.getText(), tfpContrasena2.getText(),
-                tfNombre.getText(), tfApellido.getText(), tfCalle.getText(),
-                tfCodigoPostal.getText(), tfCiudad.getText(),
-                tfTelefono.getText(), chActivo.isSelected());
-
-        if (validationError != null) {
-            mostrarAlert("Error", validationError);
-            throw new ValidationError("Los campos introducidos tienen un formato incorrecto.");
-        }
 
         usu.setEmail(tfEmail.getText());
         usu.setContrasena(tfpContrasena.getText());
@@ -179,4 +144,57 @@ public class SignUpFXMLController {
         tfTelefono.clear();
         chActivo.setSelected(false);
     }
+
+    private boolean comprobarDatos() {
+        if (tfNombre.getText().isEmpty() || tfApellido.getText().isEmpty() || tfCalle.getText().isEmpty() || tfCodigoPostal.getText().isEmpty() || tfCiudad.getText().isEmpty() || tfTelefono.getText().isEmpty()) {
+
+            new Alert(Alert.AlertType.ERROR, "Faltan campos por rellenar").showAndWait();
+            return false;
+        }
+        if (!isValidEmail(tfEmail.getText())) {
+            new Alert(Alert.AlertType.ERROR, "El email no tiene un formato correcto").showAndWait();
+            return false;
+        }
+
+        if (!isValidPassword(tfpContrasena.getText()) || !isValidPassword(tfpContrasena2.getText())) {
+            if (!tfpContrasena.getText().equals(tfpContrasena2.getText())) {
+                new Alert(Alert.AlertType.ERROR, "Las contraseñas no coinciden").showAndWait();
+                return false;
+            }
+            new Alert(Alert.AlertType.ERROR, "La contraseña tiene que ser de ocho caracteres, usa al menos una minuscula, una mayuscula y un digito").showAndWait();
+            return false;
+        }
+
+        if (!isValidPhoneNumber(tfTelefono.getText())) {
+            new Alert(Alert.AlertType.ERROR, "El numero de telefono no es valido").showAndWait();
+            return false;
+        }
+
+        return true;
+    }
+
+    public void initialize() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Stage stage = (Stage) tfApellido.getScene().getWindow();
+                stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                    @Override
+                    public void handle(WindowEvent event) {
+                        event.consume();  // Consumir el evento para manejarlo manualmente
+                        handleClose();
+                    }
+                });
+            }
+        });
+    }
+
+    private void handleClose() {
+
+        if (mostrarAlert("Confirmacion", "¿Está seguro de que desea cerrar la aplicación? Todos los cambios no guardados se perderán.")) {
+            Stage stage = (Stage) tfApellido.getScene().getWindow();
+            stage.close();
+        }
+    }
+
 }
