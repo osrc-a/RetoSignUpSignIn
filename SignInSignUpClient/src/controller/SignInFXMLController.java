@@ -5,6 +5,7 @@
  */
 package controller;
 
+import java.io.IOException;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -13,10 +14,21 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.event.EventHandler;
+import modelo.ActionUsers;
+import modelo.FactorySignableClient;
+import modelo.Usuario;
 import userinterfacetier.SignUpSignIn;
+import utils.Actions;
+import utils.Errores;
 
 public class SignInFXMLController {
 
@@ -29,24 +41,42 @@ public class SignInFXMLController {
     private static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$";
 
     @FXML
-    private void handleLogin() throws Exception {
-  String email = txtEmail.getText();
-        String password = txtPsswd.getText();
-        // Validar los campos y obtener el mensaje de error, si existe
-        String validationError = validateFields(email, password);
+    private void handleLogin() {
 
-        if (validationError != null) {
-            showAlert("Error", validationError);
-            return;  // Salir del método si hay errores
+        try {
+            ActionUsers userr = new ActionUsers();
+            Usuario user = new Usuario();
+            String email = txtEmail.getText();
+            String password = txtPsswd.getText();
+            String errorMessage = validateFields(email, password);
+            if (errorMessage != null) {
+                showAlert("Error", errorMessage);
+                return;
+            }
+            user.setEmail(email);
+            user.setContrasena(password);
+            userr.setAction(Actions.LOGGING_REQUEST);
+            userr.setUser(user);
+            FactorySignableClient.getSignable().login(userr);
+            SignUpSignIn.navegarVentanas("MainDashboardFXML.fxml");
+        } catch (Errores.DatabaseConnectionException ex) {
+            Logger.getLogger(SignInFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            new Alert(Alert.AlertType.ERROR, ex.getMessage()).showAndWait();
+        } catch (Errores.UserAlreadyExistsException ex) {
+            Logger.getLogger(SignInFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            new Alert(Alert.AlertType.ERROR, ex.getMessage()).showAndWait();
+        } catch (Errores.ServerConnectionException ex) {
+            Logger.getLogger(SignInFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            new Alert(Alert.AlertType.ERROR, ex.getMessage()).showAndWait();
+        } catch (Errores.AuthenticationFailedException ex) {
+            Logger.getLogger(SignInFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            new Alert(Alert.AlertType.ERROR, ex.getMessage()).showAndWait();
+        } catch (Errores.PropertiesFileException ex) {
+            Logger.getLogger(SignInFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            new Alert(Alert.AlertType.ERROR, ex.getMessage()).showAndWait();
+        } catch (Exception ex) {
+            Logger.getLogger(SignInFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        // Comprobar credenciales (email y contraseña correctos)
-        if (email.equals("usuario@gmail.com") && password.equals("Abcd*1234")) {
-            SignUpSignIn.navegarVentanas("MainDashboardFXML");
-        } else {
-            showAlert("Error", "Email o contraseña incorrectos.");
-        }
-
     }
 
     @FXML
@@ -55,18 +85,29 @@ public class SignInFXMLController {
     }
 
     public void initialize() {
-        Platform.runLater(() -> {
-            Stage stage = (Stage) txtEmail.getScene().getWindow();
-            stage.setOnCloseRequest(this::handleClose);
+        // Se usa Platform.runLater() para asegurarse de que el Stage esté inicializado
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                Stage stage = (Stage) txtEmail.getScene().getWindow();
+                // Configuramos el evento al cerrar la ventana con la "X"
+                stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                    @Override
+                    public void handle(WindowEvent event) {
+                        event.consume();  // Consumir el evento para manejarlo manualmente
+                        handleClose();
+                    }
+                });
+            }
         });
     }
 
-    private void handleClose(WindowEvent event) {
-        event.consume();
+    private void handleClose() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmación");
         alert.setHeaderText("¿Está seguro de que desea cerrar la aplicación?");
         alert.setContentText("Todos los cambios no guardados se perderán.");
+
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
             Stage stage = (Stage) txtEmail.getScene().getWindow();

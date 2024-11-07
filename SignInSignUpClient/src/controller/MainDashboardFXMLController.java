@@ -1,62 +1,68 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.net.URL;
-
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import modelo.Usuario;
 import userinterfacetier.ContextMenuManager;
 
 public class MainDashboardFXMLController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     *
-     * @param url
-     * @param rb
-     */
     @FXML
-    private Label lbBienvenido;
+    private Button btnCerrarSesion;
 
     @FXML
-    private AnchorPane pane; // Asegúrate de que este es el ID de tu AnchorPane en el FXML.
+    private AnchorPane pane;
+
+    @FXML
+    private TreeTableView<String> treeTableView;
+
+    @FXML
+    private TreeTableColumn<String, String> columnaDatos;
 
     private ContextMenuManager contextMenuManager;
+    private Usuario usuario;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Verifica que los elementos @FXML no sean nulos
+        // Configura la columna para mostrar los datos de cada TreeItem
+        columnaDatos.setCellValueFactory(param -> new ReadOnlyStringWrapper(param.getValue().getValue()));
+
+        // Inicializa el usuario con datos de prueba
+        usuario = new Usuario();
+        usuario.setNombre("Andoni");
+        usuario.setApellido("Ordoñez");
+        usuario.setEmail("andoni@example.com");
+        usuario.setTelefono("123456789");
+        usuario.setCalle("Calle Falsa 123");
+        usuario.setCodigoPostal("48001");
+        usuario.setCiudad("Bilbao");
 
         // Inicializar el ContextMenuManager
         contextMenuManager = new ContextMenuManager(pane);
 
-        // Configurar el evento al cerrar la ventana
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                Stage stage = (Stage) lbBienvenido.getScene().getWindow();
-                stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                    @Override
-                    public void handle(WindowEvent event) {
-                        event.consume();  // Consumir el evento para manejarlo manualmente
-                        handleClose();
-                    }
-                });
-            }
+        // Llama a setupTreeTableView para configurar los datos
+        setupTreeTableView();
+
+        // Configura el evento de cierre de ventana
+        Platform.runLater(() -> {
+            Stage stage = (Stage) btnCerrarSesion.getScene().getWindow();
+            stage.setOnCloseRequest(event -> {
+                event.consume();
+                handleClose();
+            });
         });
     }
 
@@ -68,9 +74,34 @@ public class MainDashboardFXMLController implements Initializable {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
-            Stage stage = (Stage) lbBienvenido.getScene().getWindow();
+            Stage stage = (Stage) btnCerrarSesion.getScene().getWindow();
             stage.close();
         }
     }
 
+    private void setupTreeTableView() {
+        // Nodo raíz
+        TreeItem<String> rootItem = new TreeItem<>("Datos del Usuario");
+
+        // Añadiendo datos directamente en el TreeItem
+        rootItem.getChildren().add(new TreeItem<>("Nombre: " + usuario.getNombre()));
+        rootItem.getChildren().add(new TreeItem<>("Apellido: " + usuario.getApellido()));
+
+        // Dirección con subelementos
+        TreeItem<String> direccionItem = new TreeItem<>("Dirección");
+        direccionItem.getChildren().add(new TreeItem<>("Calle: " + usuario.getCalle()));
+        direccionItem.getChildren().add(new TreeItem<>("Código Postal: " + usuario.getCodigoPostal()));
+        direccionItem.getChildren().add(new TreeItem<>("Ciudad: " + usuario.getCiudad()));
+        rootItem.getChildren().add(direccionItem);
+
+        // Contacto con subelementos
+        TreeItem<String> contactoItem = new TreeItem<>("Contacto");
+        contactoItem.getChildren().add(new TreeItem<>("Email: " + usuario.getEmail()));
+        contactoItem.getChildren().add(new TreeItem<>("Teléfono: " + usuario.getTelefono()));
+        rootItem.getChildren().add(contactoItem);
+
+        // Configuramos el TreeTableView
+        treeTableView.setRoot(rootItem);
+        treeTableView.setShowRoot(false);
+    }
 }
