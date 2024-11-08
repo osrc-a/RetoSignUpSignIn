@@ -1,13 +1,13 @@
 # RetoSignUpSignIn
 
 URLs, repositorios.
-https://github.com/osrc-a/RetoSignUpSignIn_Client.git
-https://github.com/lucia9928/RetoSignInSignUp-Server.git
-https://github.com/lucia9928/Reto-sign-in-Sign-up-libreria.git
+https://github.com/osrc-a/RetoSignUpSignIn_Client.git.
+https://github.com/lucia9928/RetoSignInSignUp-Server.git.
+https://github.com/lucia9928/Reto-sign-in-Sign-up-libreria.git.
 
-markel0707--> Markel Arabiourrutia
-lucia9928 --> Melany Salinas
-osrc-a    --> Oscar Gonzalez
+markel0707--> Markel Arabiourrutia.
+lucia9928 --> Melany Salinas.
+osrc-a    --> Oscar Gonzalez.
 AndoniOrd --> Andoni Ordoñez
 
 Importante:
