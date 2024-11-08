@@ -5,14 +5,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane fx:id="pane" cache="true" prefHeight="500.0" prefWidth="600.0"
-            stylesheets="@../resources/css/SignInSignUpClient.css"
+            stylesheets="@../resources/SignInSignUpClient.css"
             xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="controller.MainDashboardFXMLController">
 
     <Button fx:id="btnCerrarSesion" layoutX="442.0" layoutY="47.0" mnemonicParsing="false"
             prefHeight="26.0" prefWidth="123.0"
-            styleClass="labelRounded" text="Cerrar sesión" />
+            styleClass="labelRounded" text="Cerrar sesión" onAction="#irASignIn"/>
 
     <TreeTableView fx:id="treeTableView" layoutX="135" layoutY="135" prefHeight="300" prefWidth="510">
         <columns>

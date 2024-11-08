@@ -7,10 +7,8 @@ package controller;
 
 import javafx.stage.Stage;
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
-import org.testfx.api.FxAssert;
 import static org.testfx.api.FxAssert.verifyThat;
 import org.testfx.framework.junit.ApplicationTest;
 import static org.testfx.matcher.base.NodeMatchers.isVisible;
@@ -18,10 +16,10 @@ import userinterfacetier.SignUpSignIn;
 
 /**
  *
- * @author 2dam
+ * @author Markel
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class SignUpFXMLControllerTest extends ApplicationTest {
+public class SignUpServerAbiertoTest extends ApplicationTest{
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -29,23 +27,33 @@ public class SignUpFXMLControllerTest extends ApplicationTest {
     }
 
     @Test
-    public void primerTest() {
+    public void ServidorAbierto() {
         clickOn("#btnSignUp");
 
-        clickOn("#btnCrearCuenta"); // Intenta registrarse sin rellenar campos
-        verifyThat("Faltan campos por rellenar", isVisible());
+        clickOn("#tfEmail");
+        write("abcdef@gmail.com");
         clickOn("#tfpContrasena");
+        write("Abcd*1234");
+        clickOn("#tfpContrasena2");
+        write("Abcd*1234");
+        clickOn("#tfNombre");
+        write("Markel");
+        clickOn("#tfApellido");
+        write("arabio");
+        clickOn("#tfCalle");
+        write("lehendakari aguirre");
+        clickOn("#tfCodigoPostal");
+        write("42514");
+        clickOn("#tfCiudad");
+        write("Bilbao");
+        clickOn("#tfTelefono");
+        write("621128444");
+        clickOn("#chActivo");
+        clickOn("#btnCrearCuenta");
+        sleep(2000);
+        verifyThat("Registro existoso", isVisible());
         clickOn("Aceptar");
 
     }
 
-    @Test
-    public void testInvalidEmailFormat() {
-        clickOn("#btnSignUp");
-        clickOn("#tfEmail");
-        write("invalidemail.com"); // Email inválido
-        clickOn("#btnCrearCuenta");
-        verifyThat("El email no tiene un formato correcto", isVisible());
-
-    }
 }
