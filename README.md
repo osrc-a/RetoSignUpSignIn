@@ -35,10 +35,15 @@ Importante, hacer la ejecución en 2 instancias de consola diferentes.(Es decir,
 otra y ejecutar el cliente.)
 
 Para ejecutar el proyecto desde la línea de comandos, ve a la carpeta dist de cada proyecto y escribe lo siguiente:
+
 ej. cd C:/.../.../.../dist
+
 java -jar "RetoSignInSignUpServer.jar"
+
 A la hora de cerrar el servidor, hay que darle Ctrl + c, o cerrar la consola.
+
 ej. cd C:/.../.../.../dist
+
 java -jar "RetoSignInSignUpClient.jar"
 
 Descripción del Proyecto:
