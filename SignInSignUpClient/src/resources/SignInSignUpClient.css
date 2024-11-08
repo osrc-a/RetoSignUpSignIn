@@ -1,4 +1,4 @@
-/*
+/* 
 To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
@@ -16,8 +16,50 @@ and open the template in the editor.
 }
 .labelRounded{
             -fx-background-radius: 15; 
-            -fx-border-radius: 15; 
+            -fx-border-radius: 10px;
             -fx-border-color: #2c3e50; 
             -fx-border-width: 2;
 }
-            
+
+/* Estilo para la TreeTableView */
+.tree-table-view {
+    -fx-background-color: #2C6B2F; /* Fondo verde bosque soviético */
+    -fx-border-color: #888; /* Borde gris */
+    -fx-border-width: 1px;
+}
+
+/* Estilo para las filas de la tabla */
+.tree-table-row {
+    -fx-background-color: #ffffff; /* Fondo blanco para las filas */
+}
+
+/* Cambiar el color de fondo al pasar el mouse por encima */
+.tree-table-row:hover {
+    -fx-background-color: #d9e9ff; /* Fondo azul claro al pasar el mouse */
+}
+
+/* Estilo para las celdas */
+.tree-table-cell {
+    -fx-text-fill: #333333; /* Color de texto oscuro */
+    -fx-font-size: 14px; /* Tamaño de fuente */
+}
+
+/* Estilo para las cabeceras de las columnas */
+.tree-table-column-header {
+    -fx-background-color: #4CAF50; /* Fondo verde para las cabeceras */
+    -fx-text-fill: white; /* Texto blanco en la cabecera */
+    -fx-font-weight: bold;
+}
+
+/* Cambiar el color de fondo de la fila seleccionada */
+.tree-table-row:selected {
+    -fx-background-color: #2C6B2F; /* Fondo verde bosque soviético al hacer clic */
+    -fx-text-fill: white; /* Texto blanco cuando la fila está seleccionada */
+}
+
+
+
+
+
+
+

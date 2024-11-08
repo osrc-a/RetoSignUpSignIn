@@ -1,33 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.Blend?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="pane" cache="true" prefHeight="500.0" prefWidth="600.0"
             stylesheets="@../resources/SignInSignUpClient.css"
             xmlns="http://javafx.com/javafx/8"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="controller.MainDashboardFXMLController">
-    <children>
-        <Label fx:id="lbbienvenido" alignment="TOP_CENTER" layoutX="135.0" layoutY="185.0"
-               prefHeight="34.0" prefWidth="138.0"
-               style="-fx-background-color: white;"
-               styleClass="labelRounded" text="Bienvenido"
-               textAlignment="CENTER" wrapText="true">
-            <font>
-                <Font size="24.0" />
-            </font>
-            <effect>
-                <Blend mode="MULTIPLY" opacity="0.48" />
-            </effect>
-        </Label>
-       
-        <Button layoutX="442.0" layoutY="47.0" mnemonicParsing="false"
-                prefHeight="26.0" prefWidth="123.0"
-                styleClass="labelRounded" text="Cerrar sesión" />
-    </children>
+
+    <Button fx:id="btnCerrarSesion" layoutX="442.0" layoutY="47.0" mnemonicParsing="false"
+            prefHeight="26.0" prefWidth="123.0"
+            styleClass="labelRounded" text="Cerrar sesión" onAction="#irASignIn"/>
+
+    <TreeTableView fx:id="treeTableView" layoutX="135" layoutY="135" prefHeight="300" prefWidth="510">
+        <columns>
+            <TreeTableColumn fx:id="columnaDatos" text="Datos del Usuario" prefWidth="500"/>
+        </columns>
+    </TreeTableView>
 </AnchorPane>
