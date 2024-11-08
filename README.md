@@ -1,6 +1,17 @@
 # RetoSignUpSignIn
 
+URLs, repositorios.
+https://github.com/osrc-a/RetoSignUpSignIn_Client.git
+https://github.com/lucia9928/RetoSignInSignUp-Server.git
+https://github.com/lucia9928/Reto-sign-in-Sign-up-libreria.git
+
+markel0707--> Markel Arabiourrutia
+lucia9928 --> Melany Salinas
+osrc-a    --> Oscar Gonzalez
+AndoniOrd --> Andoni Ordoñez
+
 Importante:
+
 1.Archivo de propiedades, configuararlo acorde lo que tu base de datos disponga, 
 usuarios, contraseñas, url etc.
 
