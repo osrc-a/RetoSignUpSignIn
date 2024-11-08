@@ -1,6 +1,29 @@
 # RetoSignUpSignIn
 
+Importante:
+1.Archivo de propiedades, configuararlo acorde lo que tu base de datos disponga, 
+usuarios, contraseñas, url etc.
 
+El parametro URL, USER, PASSWORD. Asegurar de que esta acorde a tus necesidades.
+
+2.Asegurarse de tener campos de base de datos como notification_type que
+no viene por defecto si no tienes proyecto y parte de horas activados en la
+base de datos de odoo.
+
+Ejecutar el jar.
+Cuando creas un proyecto de aplicación Java que tiene una clase principal, el IDE copia automáticamente todos los archivos JAR 
+en el classpath del proyecto a la carpeta dist/lib del proyecto. El IDE también agrega cada uno de los archivos JAR al elemento 
+Class-Path en el archivo de manifiesto JAR de la aplicación (MANIFEST.MF).
+
+Importante, hacer la ejecución en 2 instancias de consola diferentes.(Es decir, abrir una consola, ejecutar el servidor, abrir 
+otra y ejecutar el cliente.)
+
+Para ejecutar el proyecto desde la línea de comandos, ve a la carpeta dist de cada proyecto y escribe lo siguiente:
+ej. cd C:/.../.../.../dist
+java -jar "RetoSignInSignUpServer.jar"
+A la hora de cerrar el servidor, hay que darle Ctrl + c, o cerrar la consola.
+ej. cd C:/.../.../.../dist
+java -jar "RetoSignInSignUpClient.jar"
 
 Descripción del Proyecto:
 
