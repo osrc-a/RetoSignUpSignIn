@@ -8,12 +8,13 @@ and open the template in the editor.
     Author     : 2dam
 */
 #pane{
- -fx-background-image: url("fondo.jpg");
+ -fx-background-color: #44b3ae;
     -fx-background-repeat: stretch;   
     -fx-background-size: 900 900;
     -fx-background-position: center center;
     -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
 }
+
 .labelRounded{
             -fx-background-radius: 15; 
             -fx-border-radius: 10px;
@@ -21,6 +22,16 @@ and open the template in the editor.
             -fx-border-width: 2;
 }
 
+.showPasswordButton {
+    -fx-background-color: #f0f0f0;  /* Fondo gris claro */
+    -fx-text-fill: #333333;         /* Texto oscuro */
+    -fx-font-size: 14px;
+    -fx-border-color: #cccccc;      /* Borde gris */
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 2px 5px;           /* Espaciado interno */
+    -fx-cursor: hand;               /* Cambia el cursor al pasar sobre el botón */
+}
 /* Estilo para la TreeTableView */
 .tree-table-view {
     -fx-background-color: #2C6B2F; /* Fondo verde bosque soviético */
@@ -56,7 +67,6 @@ and open the template in the editor.
     -fx-background-color: #2C6B2F; /* Fondo verde bosque soviético al hacer clic */
     -fx-text-fill: white; /* Texto blanco cuando la fila está seleccionada */
 }
-
 
 
 
