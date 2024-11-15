@@ -37,7 +37,13 @@ public class ContextMenuManager {
         viewProfile.setOnAction(event -> showUserProfile());
         changePassword.setOnAction(event -> showChangePasswordAlert());
         settings.setOnAction(event -> showSettingsAlert());
-        logout.setOnAction(event -> handleLogout());
+        logout.setOnAction(event -> {
+            try {
+                handleLogout();
+            } catch (Exception ex) {
+                Logger.getLogger(ContextMenuManager.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
         exit.setOnAction(event -> exitApplication());
 
         // Detectar clic derecho en el AnchorPane para mostrar el menú contextual
@@ -73,16 +79,33 @@ public class ContextMenuManager {
         alert.showAndWait();
     }
 
-    private void handleLogout() {
+    private void handleLogout() throws Exception {
+        // Crear un Alert de tipo CONFIRMATION
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Cerrar Sesión");
         alert.setHeaderText(null);
         alert.setContentText("¿Está seguro de que desea cerrar sesión?");
-        alert.showAndWait();
+
+        // Mostrar el Alert y esperar la respuesta
+        Optional<ButtonType> result = alert.showAndWait();
+
+        // Comprobar si se presionó "OK"
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            SignUpSignIn.navegarVentanas("SignInFXML.fxml");
+        }
     }
 
-    private void exitApplication() {
+   private void exitApplication() {
         // Implementación para cerrar la aplicación
-        System.exit(0);
-    }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmación");
+        alert.setHeaderText("¿Está seguro de que desea cerrar la aplicación?");
+        alert.setContentText("Todos los cambios no guardados se perderán.");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            Stage stage = (Stage) contextMenu.getOwnerWindow();
+            stage.close();
+        }
+   }
 }
