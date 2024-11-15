@@ -18,7 +18,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import modelo.ActionUsers;
 import modelo.FactorySignableClient;
 import modelo.Usuario;
@@ -46,6 +49,9 @@ public class SignInFXMLController {
 
     @FXML
     private PasswordField txtPsswd;
+
+    @FXML
+    private Button btnShowPassword;
 
     private static final String EMAIL_REGEX = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$";
     private static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{6,}$";
@@ -96,7 +102,7 @@ public class SignInFXMLController {
      */
     @FXML
     private void irASignUp() throws Exception {
-        SignUpSignIn.navegarVentanas("SignUpFXML.fxml");
+        SignUpSignIn.navegarVentanas("MainDashboardFXML.fxml");
     }
 
     /**
@@ -114,6 +120,38 @@ public class SignInFXMLController {
                     handleClose();
                 }
             });
+        });
+
+        txtEmail.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
+                //Controlamos cuando txtEmail pierde el foco
+                if (!arg2) {
+
+                    if (!checkEmail(txtEmail.getText())) {
+                        txtEmail.setStyle("-fx-text-fill: red; -fx-font-size: 16px;");
+                    } else {
+                        txtEmail.setStyle("-fx-text-fill: black; -fx-font-size: 16px;");
+                    }
+
+                }
+            }
+        });
+
+        txtPsswd.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
+                //Controlamos cuando txtEmail pierde el foco
+                if (!arg2) {
+
+                    if (!checkPassword(txtPsswd.getText())) {
+                        txtPsswd.setStyle("-fx-text-fill: red; -fx-font-size: 16px;");
+                    } else {
+                        txtPsswd.setStyle("-fx-text-fill: black; -fx-font-size: 16px;");
+                    }
+
+                }
+            }
         });
     }
 
@@ -146,10 +184,6 @@ public class SignInFXMLController {
         StringBuilder errorMessage = new StringBuilder();
         if (email.isEmpty() || password.isEmpty()) {
             errorMessage.append("El email o la contraseña no pueden estar vacíos.\n");
-        } else if (!checkEmail(email)) {
-            errorMessage.append("Formato de email inválido.\n");
-        } else if (!checkPassword(password)) {
-            errorMessage.append("La contraseña debe tener al menos 6 caracteres, con al menos una mayúscula, una minúscula y un número.\n");
         }
         return errorMessage.length() > 0 ? errorMessage.toString() : null;
     }
@@ -192,5 +226,23 @@ public class SignInFXMLController {
         Pattern pattern = Pattern.compile(PASSWORD_REGEX);
         Matcher matcher = pattern.matcher(password);
         return matcher.matches();
+    }
+
+    private boolean isPasswordVisible = false;
+
+    @FXML
+    private void togglePasswordVisibility() {
+        if (isPasswordVisible) {
+            // Cambia a campo de contraseña
+            txtPsswd.setText(txtPsswd.getText());
+            txtPsswd.setPromptText("Ingresa tu contraseña");
+            isPasswordVisible = false;
+        } else {
+            // Cambia a campo de texto
+            txtPsswd.setPromptText(txtPsswd.getText());
+            txtPsswd.clear();
+            isPasswordVisible = true;
+        }
+
     }
 }

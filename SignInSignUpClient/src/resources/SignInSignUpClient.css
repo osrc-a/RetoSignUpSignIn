@@ -8,7 +8,7 @@ and open the template in the editor.
     Author     : 2dam
 */
 #pane{
- -fx-background-image: url("fondo.jpg");
+ -fx-background-color: CB9DF0;
     -fx-background-repeat: stretch;   
     -fx-background-size: 900 900;
     -fx-background-position: center center;
