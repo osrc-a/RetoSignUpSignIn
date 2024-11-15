@@ -62,31 +62,35 @@ public class SignInFXMLController {
             Usuario user = new Usuario();
             String email = txtEmail.getText();
             String password = txtPsswd.getText();
-            String errorMessage = validateFields(email, password);
-
-            if (errorMessage != null) {
-                showAlert("Error", errorMessage);
-                return;
-            }
-
             user.setEmail(email);
             user.setContrasena(password);
             userr.setAction(Actions.LOGGING_REQUEST);
+            
             userr.setUser(user);
             userr = FactorySignableClient.getSignable().login(userr);
-
+            
             if (userr.getUser().getActivo()) {
                 SignUpSignIn.navegarVentanas("MainDashboardFXML.fxml");
             } else {
                 new Alert(Alert.AlertType.INFORMATION, "El usuario no está activo").showAndWait();
             }
 
-        } catch (Errores.DatabaseConnectionException | Errores.UserAlreadyExistsException | Errores.ServerConnectionException | Errores.AuthenticationFailedException | Errores.PropertiesFileException ex) {
+        } catch (Errores.DatabaseConnectionException | Errores.UserAlreadyExistsException | Errores.ServerConnectionException | Errores.PropertiesFileException ex) {
             Logger.getLogger(SignInFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }catch (Errores.AuthenticationFailedException ex) {
+            Logger.getLogger(SignInFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            txtEmail.setStyle("-fx-text-inner-color: red");
+            txtPsswd.setStyle("-fx-text-inner-color: red");
             new Alert(Alert.AlertType.ERROR, ex.getMessage()).showAndWait();
         } catch (Exception ex) {
             Logger.getLogger(SignInFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    public static boolean isStringValidPhoneNumber(String field) {
+        // do the validating here
+        return false;
     }
 
     /**
@@ -97,6 +101,27 @@ public class SignInFXMLController {
     @FXML
     private void irASignUp() throws Exception {
         SignUpSignIn.navegarVentanas("SignUpFXML.fxml");
+    }
+    @FXML
+    private Button btnShowPassword;
+
+    private boolean isPasswordVisible = false;
+
+    @FXML
+    private void togglePasswordVisibility() {
+        if (isPasswordVisible) {
+            // Cambia a campo de contraseña
+            txtPsswd.setText(txtPsswd.getText());
+            txtPsswd.setPromptText("Ingresa tu contraseña");
+            isPasswordVisible = false;
+            btnShowPassword.setText("👁");
+        } else {
+            // Cambia a campo de texto
+            txtPsswd.setPromptText(txtPsswd.getText());
+            txtPsswd.clear();
+            isPasswordVisible = true;
+            btnShowPassword.setText("👁");
+        }
     }
 
     /**
@@ -131,27 +156,6 @@ public class SignInFXMLController {
             Stage stage = (Stage) txtEmail.getScene().getWindow();
             stage.close();
         }
-    }
-
-    /**
-     * Valida que los campos de correo y contraseña cumplan con el formato
-     * requerido.
-     *
-     * @param email El correo electrónico ingresado.
-     * @param password La contraseña ingresada.
-     * @return Mensaje de error si hay problemas en los campos, o null si son
-     * válidos.
-     */
-    private String validateFields(String email, String password) {
-        StringBuilder errorMessage = new StringBuilder();
-        if (email.isEmpty() || password.isEmpty()) {
-            errorMessage.append("El email o la contraseña no pueden estar vacíos.\n");
-        } else if (!checkEmail(email)) {
-            errorMessage.append("Formato de email inválido.\n");
-        } else if (!checkPassword(password)) {
-            errorMessage.append("La contraseña debe tener al menos 6 caracteres, con al menos una mayúscula, una minúscula y un número.\n");
-        }
-        return errorMessage.length() > 0 ? errorMessage.toString() : null;
     }
 
     /**
@@ -194,3 +198,4 @@ public class SignInFXMLController {
         return matcher.matches();
     }
 }
+
