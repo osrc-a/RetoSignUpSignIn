@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="pane" prefHeight="594.0" prefWidth="789.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SignUpFXMLController">
+<AnchorPane id="pane" prefHeight="594.0" prefWidth="789.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SignUpFXMLController">
     <children>
         <GridPane id="pane" layoutX="1.0" maxHeight="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="658.0" prefWidth="861.0" stylesheets="@../resources/SignInSignUpClient.css">
             <columnConstraints>
@@ -36,28 +36,31 @@
                 <RowConstraints maxHeight="170.39998474121091" minHeight="10.0" prefHeight="94.39997558593757" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label alignment="TOP_CENTER" prefHeight="18.0" prefWidth="88.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Contraseña" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                 <TextField fx:id="tfEmail" prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                <Label alignment="TOP_CENTER" prefHeight="18.0" prefWidth="88.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Nombre" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                <Label alignment="TOP_CENTER" prefHeight="18.0" prefWidth="88.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Apellido" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                <Label alignment="TOP_CENTER" prefHeight="27.0" prefWidth="86.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Email" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <TextField fx:id="tfNombre" prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                <TextField fx:id="tfApellido" prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                <Button id="btnCrearCuenta" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#registro" prefHeight="26.0" prefWidth="221.0" styleClass="labelRounded" text="Crear cuenta" textAlignment="JUSTIFY" GridPane.columnIndex="2" GridPane.rowIndex="11" />
-                <Label prefHeight="22.0" prefWidth="161.0" style="-fx-background-color: white;" styleClass="labelRounded" stylesheets="@../resources/SignInSignUpClient.css" text="¿Ya tienes una cuenta?" GridPane.columnIndex="1" GridPane.rowIndex="12" />
-                <Button id="btnIniciarSesion" alignment="CENTER" mnemonicParsing="false" onAction="#irASignIn" prefHeight="26.0" prefWidth="221.0" styleClass="labelRounded" text="Inicia sesión" GridPane.columnIndex="2" GridPane.rowIndex="12" />
-                <Label alignment="TOP_CENTER" prefHeight="18.0" prefWidth="133.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Confirmar Contraseña" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                 <PasswordField fx:id="tfpContrasena" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                 <PasswordField fx:id="tfpContrasena2" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                <TextField fx:id="tfNombre" prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                <TextField fx:id="tfApellido" prefHeight="26.0" prefWidth="202.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
             <TextField fx:id="tfCalle" GridPane.columnIndex="2" GridPane.rowIndex="6" />
             <TextField fx:id="tfCodigoPostal" GridPane.columnIndex="2" GridPane.rowIndex="7" />
             <TextField fx:id="tfCiudad" GridPane.columnIndex="2" GridPane.rowIndex="8" />
             <TextField fx:id="tfTelefono" GridPane.columnIndex="2" GridPane.rowIndex="9" />
             <CheckBox fx:id="chActivo" mnemonicParsing="false" prefHeight="18.0" prefWidth="126.0" text="Activo" textFill="#fffdfd" GridPane.columnIndex="2" GridPane.rowIndex="10" />
-            <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="112.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Calle" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-            <Label alignment="TOP_CENTER" prefHeight="18.0" prefWidth="116.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Codigo Postal" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-            <Label alignment="TOP_CENTER" prefHeight="18.0" prefWidth="122.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Ciudad" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-            <Label alignment="TOP_CENTER" prefHeight="18.0" prefWidth="113.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Telefono" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                <Label alignment="TOP_CENTER" prefHeight="18.0" prefWidth="88.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Nombre *" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                <Label alignment="TOP_CENTER" prefHeight="18.0" prefWidth="88.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Apellido *" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                <Label alignment="TOP_CENTER" prefHeight="27.0" prefWidth="86.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Email *" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Label alignment="TOP_CENTER" prefHeight="22.0" prefWidth="112.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Contraseña *" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <Button id="btnCrearCuenta" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#registro" prefHeight="26.0" prefWidth="221.0" styleClass="labelRounded" text="Crear cuenta" textAlignment="JUSTIFY" GridPane.columnIndex="2" GridPane.rowIndex="11" />
+                <Label prefHeight="22.0" prefWidth="161.0" style="-fx-background-color: white;" styleClass="labelRounded" stylesheets="@../resources/SignInSignUpClient.css" text="¿Ya tienes una cuenta?" GridPane.columnIndex="1" GridPane.rowIndex="12" />
+                <Button id="btnIniciarSesion" alignment="CENTER" mnemonicParsing="false" onAction="#irASignIn" prefHeight="26.0" prefWidth="221.0" styleClass="labelRounded" text="Inicia sesión" GridPane.columnIndex="2" GridPane.rowIndex="12" />
+                <Button id="limpiarCampos" alignment="CENTER" mnemonicParsing="false" onAction="#limpiarCampos" prefHeight="26.0" prefWidth="221.0" styleClass="labelRounded" text="Limpiar campos" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                <Label alignment="TOP_CENTER" prefHeight="22.0" prefWidth="184.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Confirmar Contraseña *" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="18.0" prefWidth="112.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Calle *" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+            <Label alignment="TOP_CENTER" prefHeight="18.0" prefWidth="116.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Codigo Postal *" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+            <Label alignment="TOP_CENTER" prefHeight="18.0" prefWidth="122.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Ciudad *" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+            <Label alignment="TOP_CENTER" prefHeight="18.0" prefWidth="113.0" style="-fx-background-color: white;" styleClass="labelRounded" text="Telefono *" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+            <Button fx:id="contrasena1" mnemonicParsing="false" text="( ͡° ͜ʖ ͡°)" GridPane.columnIndex="3" GridPane.rowIndex="2" onAction="#mostrarContrasena1"/>
+            <Button fx:id="contrasena2" mnemonicParsing="false" text="( ͡° ͜ʖ ͡°)" GridPane.columnIndex="3" GridPane.rowIndex="3" onAction="#mostrarContrasena2"/>
             </children>
         </GridPane>
     </children>

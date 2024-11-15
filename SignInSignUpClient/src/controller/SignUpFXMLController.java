@@ -9,13 +9,18 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import modelo.ActionUsers;
 import modelo.FactorySignableClient;
@@ -76,7 +81,29 @@ public class SignUpFXMLController {
      * @author Markel
      */
     @FXML
+    private void mostrarContrasena1(ActionEvent event) {
+
+        String a = tfpContrasena.getText();
+        new Alert(Alert.AlertType.INFORMATION, "La contraseña del primer campo es -> " + a).showAndWait();
+
+    }
+
+    @FXML
+    private void mostrarContrasena2(ActionEvent event) {
+
+        String a = tfpContrasena2.getText();
+        new Alert(Alert.AlertType.INFORMATION, "La contraseña del segundo campo es -> " + a).showAndWait();
+
+    }
+
+    @FXML
+    private void limpiarCampos(ActionEvent event) {
+        clearFields();
+    }
+
+    @FXML
     private void registro(ActionEvent event) throws ExceptionInInitializerError {
+
         try {
             if (comprobarDatos()) {
                 Usuario user = insercionDeDatos();
@@ -140,9 +167,9 @@ public class SignUpFXMLController {
      * @return true si el número es un número entero válido, false en caso
      * contrario.
      */
-    private boolean isValidPhoneNumber(String phoneNumber) {
+    private boolean isValidNumerico(String numerico) {
         try {
-            Integer.parseInt(phoneNumber);
+            Integer.parseInt(numerico);
             return true;
         } catch (NumberFormatException e) {
             return false;
@@ -206,10 +233,32 @@ public class SignUpFXMLController {
      * @return true si los datos son válidos, false en caso contrario.
      */
     private boolean comprobarDatos() {
-        if (tfNombre.getText().isEmpty() || tfApellido.getText().isEmpty() || tfCalle.getText().isEmpty() || tfCodigoPostal.getText().isEmpty() || tfCiudad.getText().isEmpty() || tfTelefono.getText().isEmpty()) {
-            new Alert(Alert.AlertType.ERROR, "Faltan campos por rellenar").showAndWait();
+
+        if (tfEmail.getText().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Falta Email").showAndWait();
+            return false;
+        } else if (tfNombre.getText().isEmpty()) {
+
+            new Alert(Alert.AlertType.ERROR, "Falta Nombre").showAndWait();
+            return false;
+        } else if (tfApellido.getText().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Falta Apellido").showAndWait();
+            return false;
+        } else if (tfCalle.getText().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Falta Calle").showAndWait();
+            return false;
+        } else if (tfCodigoPostal.getText().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Falta codigo postal").showAndWait();
+            return false;
+        } else if (tfCiudad.getText().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Falta Ciudad").showAndWait();
+            return false;
+
+        } else if (tfTelefono.getText().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Falta telefono").showAndWait();
             return false;
         }
+
         if (!isValidEmail(tfEmail.getText())) {
             new Alert(Alert.AlertType.ERROR, "El email no tiene un formato correcto").showAndWait();
             return false;
@@ -222,8 +271,12 @@ public class SignUpFXMLController {
             new Alert(Alert.AlertType.ERROR, "La contraseña debe tener ocho caracteres y al menos una minúscula, una mayúscula y un dígito").showAndWait();
             return false;
         }
-        if (!isValidPhoneNumber(tfTelefono.getText())) {
+        if (!isValidNumerico(tfTelefono.getText())) {
             new Alert(Alert.AlertType.ERROR, "El número de teléfono no es válido").showAndWait();
+            return false;
+        }
+        if (!isValidNumerico(tfCodigoPostal.getText())) {
+            new Alert(Alert.AlertType.ERROR, "El número de codigo postal no es válido").showAndWait();
             return false;
         }
         return true;
@@ -233,6 +286,126 @@ public class SignUpFXMLController {
      * Inicializa el controlador y configura el evento de cierre de la ventana.
      */
     public void initialize() {
+
+        tfEmail.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
+                //Controlamos cuando dimX pierde el foco
+                if (!arg2) {
+                    if (!isValidEmail(tfEmail.getText())) {
+                        tfEmail.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+                    }
+
+                    //Aquí va el código que queremos que se ejecute cuando dimX pierda el foco. 
+                }
+            }
+        });
+
+        tfpContrasena.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
+                //Controlamos cuando dimX pierde el foco
+                if (!arg2) {
+                    if (!isValidPassword(tfpContrasena.getText()) || !isValidPassword(tfpContrasena2.getText()) || !tfpContrasena.getText().equals(tfpContrasena2.getText())) {
+                        tfpContrasena.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+                        tfpContrasena2.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+                    } else {
+                        tfpContrasena.setStyle("-fx-border-width: 0px ;");
+                        tfpContrasena2.setStyle("-fx-border-width: 0px ;");
+                    }
+                    //Aquí va el código que queremos que se ejecute cuando dimX pierda el foco. 
+                }
+            }
+        });
+        tfpContrasena2.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
+                //Controlamos cuando dimX pierde el foco
+                if (!arg2) {
+                    if (!isValidPassword(tfpContrasena.getText()) || !isValidPassword(tfpContrasena2.getText()) || !tfpContrasena.getText().equals(tfpContrasena2.getText())) {
+                        tfpContrasena.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+                        tfpContrasena2.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+                    } else {
+                        tfpContrasena.setStyle("-fx-border-width: 0px ;");
+                        tfpContrasena2.setStyle("-fx-border-width: 0px ;");
+                    }
+                    //Aquí va el código que queremos que se ejecute cuando dimX pierda el foco. 
+                }
+            }
+        });
+        tfNombre.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
+                //Controlamos cuando dimX pierde el foco
+                if (!arg2) {
+                    if (tfNombre.getText().isEmpty()) {
+                        tfNombre.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+                    }
+                    //Aquí va el código que queremos que se ejecute cuando dimX pierda el foco. 
+                }
+            }
+        });
+        tfApellido.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
+                //Controlamos cuando dimX pierde el foco
+                if (!arg2) {
+                    if (tfApellido.getText().isEmpty()) {
+                        tfApellido.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+                    }
+                    //Aquí va el código que queremos que se ejecute cuando dimX pierda el foco. 
+                }
+            }
+        });
+        tfCalle.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
+                //Controlamos cuando dimX pierde el foco
+                if (!arg2) {
+                    if (tfCalle.getText().isEmpty()) {
+                        tfCalle.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+                    }
+                    //Aquí va el código que queremos que se ejecute cuando dimX pierda el foco. 
+                }
+            }
+        });
+        tfCodigoPostal.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
+                //Controlamos cuando dimX pierde el foco
+                if (!arg2) {
+                    if (!isValidNumerico(tfCodigoPostal.getText())) {
+                        tfCodigoPostal.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+                    }
+                    //Aquí va el código que queremos que se ejecute cuando dimX pierda el foco. 
+                }
+            }
+        });
+        tfCiudad.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
+                //Controlamos cuando dimX pierde el foco
+                if (!arg2) {
+                    if (tfCiudad.getText().isEmpty()) {
+                        tfCiudad.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+                    }
+                    //Aquí va el código que queremos que se ejecute cuando dimX pierda el foco. 
+                }
+            }
+        });
+        tfTelefono.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> arg0, Boolean arg1, Boolean arg2) {
+                //Controlamos cuando dimX pierde el foco
+                if (!arg2) {
+                    if (!isValidNumerico(tfTelefono.getText())) {
+                        tfTelefono.setStyle("-fx-border-color: red ; -fx-border-width: 2px ;");
+                    }
+                    //Aquí va el código que queremos que se ejecute cuando dimX pierda el foco. 
+                }
+            }
+        });
+
         Platform.runLater(() -> {
             Stage stage = (Stage) tfApellido.getScene().getWindow();
             stage.setOnCloseRequest(event -> {

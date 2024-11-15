@@ -33,7 +33,7 @@ public class SignInTestInicioSesion extends ApplicationTest {
         clickOn("#txtPsswd").write("Password123!");
 
         // Simula el clic en el botón de login
-        clickOn("#btnLogin");
+        clickOn("#btnEntar");
 
         // Verifica que el botón de cerrar sesión sea visible después del inicio de sesión exitoso
         verifyThat("#btnCerrarSesion", isVisible());  // Asegúrate de que el id sea el correcto

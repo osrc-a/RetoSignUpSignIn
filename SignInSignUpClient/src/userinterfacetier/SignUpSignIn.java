@@ -35,7 +35,7 @@ public class SignUpSignIn extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws Exception {
         primaryStage = stage;
-        Parent root = FXMLLoader.load(getClass().getResource("SignInFXML.fxml")); // Carga el archivo FXML para la pantalla de inicio de sesión
+        Parent root = FXMLLoader.load(getClass().getResource("SignUpFXML.fxml")); // Carga el archivo FXML para la pantalla de inicio de sesión
         root.setId("pane"); // Establece el ID del contenedor raíz
         Scene scene = new Scene(root); // Crea la escena con el contenido cargado
         primaryStage.setScene(scene); // Establece la escena en la ventana principal
@@ -43,7 +43,8 @@ public class SignUpSignIn extends javafx.application.Application {
         // Configura la ventana principal
         primaryStage.setResizable(false); // Hace que la ventana no sea redimensionable
         primaryStage.getIcons().add(new Image("resources/logoSignUpSignIn.jpg")); // Establece un ícono para la ventana
-        stage.setTitle("Sign In"); // Establece el título de la ventana
+        
+        stage.setTitle("Sign Up"); // Establece el título de la ventana
         stage.show(); // Muestra la ventana
     }
 

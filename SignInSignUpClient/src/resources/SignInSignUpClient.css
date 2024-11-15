@@ -8,21 +8,27 @@ and open the template in the editor.
     Author     : 2dam
 */
 #pane{
- -fx-background-image: url("fondo.jpg");
+        -fx-background-color:#20b0ba;
+   
+
+
+    
     -fx-background-repeat: stretch;   
     -fx-background-size: 900 900;
     -fx-background-position: center center;
     -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
 }
 .labelRounded{
-            -fx-background-radius: 15; 
-            -fx-border-radius: 10px;
-            -fx-border-color: #2c3e50; 
-            -fx-border-width: 2;
+    
+    -fx-background-radius: 15; 
+    -fx-border-radius: 10px;
+    -fx-border-color: #2c3e50; 
+    -fx-border-width: 2;
 }
 
 /* Estilo para la TreeTableView */
 .tree-table-view {
+
     -fx-background-color: #2C6B2F; /* Fondo verde bosque soviético */
     -fx-border-color: #888; /* Borde gris */
     -fx-border-width: 1px;

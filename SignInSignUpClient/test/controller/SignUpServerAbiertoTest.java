@@ -19,7 +19,7 @@ import userinterfacetier.SignUpSignIn;
  * @author Markel
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class SignUpServerAbiertoTest extends ApplicationTest{
+public class SignUpServerAbiertoTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -31,7 +31,7 @@ public class SignUpServerAbiertoTest extends ApplicationTest{
         clickOn("#btnSignUp");
 
         clickOn("#tfEmail");
-        write("abcdef@gmail.com");
+        write("markel@gmail.com");
         clickOn("#tfpContrasena");
         write("Abcd*1234");
         clickOn("#tfpContrasena2");
@@ -52,6 +52,36 @@ public class SignUpServerAbiertoTest extends ApplicationTest{
         clickOn("#btnCrearCuenta");
         sleep(2000);
         verifyThat("Registro existoso", isVisible());
+        clickOn("Aceptar");
+
+    }
+
+    @Test
+    public void ServidorAbiertoUsuarioRepetido() {
+        clickOn("#btnSignUp");
+
+        clickOn("#tfEmail");
+        write("markel@gmail.com");
+        clickOn("#tfpContrasena");
+        write("Abcd*1234");
+        clickOn("#tfpContrasena2");
+        write("Abcd*1234");
+        clickOn("#tfNombre");
+        write("Markel");
+        clickOn("#tfApellido");
+        write("arabio");
+        clickOn("#tfCalle");
+        write("lehendakari aguirre");
+        clickOn("#tfCodigoPostal");
+        write("42514");
+        clickOn("#tfCiudad");
+        write("Bilbao");
+        clickOn("#tfTelefono");
+        write("621128444");
+        clickOn("#chActivo");
+        clickOn("#btnCrearCuenta");
+        sleep(2000);
+        verifyThat("El usuario ya existe", isVisible());
         clickOn("Aceptar");
 
     }
