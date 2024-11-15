@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -62,7 +63,8 @@ public class SignUpFXMLController {
 
     @FXML
     private CheckBox chActivo;
-
+    @FXML 
+    private Label nombre, apellido, email, contrasena, ciudad, calle, codigoPostal, telefono;
     /**
      * Método para registrar al usuario cuando se hace clic en el botón de
      * registro. Realiza la validación de los datos, inserta los datos en el
@@ -89,6 +91,7 @@ public class SignUpFXMLController {
                     if (Actions.REGISTER_OK.equals(userr.getAction())) {
                         new Alert(Alert.AlertType.INFORMATION, "Registro existoso").showAndWait();
                         clearFields();
+                       
                     } else {
                         new Alert(Alert.AlertType.INFORMATION, "El servidor no esta abierto").showAndWait();
                     }
@@ -97,6 +100,8 @@ public class SignUpFXMLController {
         } catch (Errores.DatabaseConnectionException | Errores.UserAlreadyExistsException | Errores.ServerConnectionException | Errores.PropertiesFileException | Errores.AuthenticationFailedException ex) {
             Logger.getLogger(SignUpFXMLController.class.getName()).log(Level.SEVERE, null, ex);
             new Alert(Alert.AlertType.ERROR, ex.getMessage()).showAndWait();
+        } catch (Exception ex) {
+            Logger.getLogger(SignUpFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -109,7 +114,10 @@ public class SignUpFXMLController {
     private void irASignIn() throws Exception {
         SignUpSignIn.navegarVentanas("SignInFXML.fxml");
     }
-
+@FXML
+private void limpiarDatos() throws Exception{
+      clearFields();
+    }
     /**
      * Verifica si el email ingresado es válido.
      *
@@ -148,7 +156,14 @@ public class SignUpFXMLController {
             return false;
         }
     }
-
+ private boolean isValidCodigoPostal(String codigoPostal) {
+        try {
+            Integer.parseInt(codigoPostal);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
     /**
      * Muestra una alerta de confirmación al usuario.
      *
@@ -206,10 +221,12 @@ public class SignUpFXMLController {
      * @return true si los datos son válidos, false en caso contrario.
      */
     private boolean comprobarDatos() {
+        String campoSinRellenar =comprobarCampos();
         if (tfNombre.getText().isEmpty() || tfApellido.getText().isEmpty() || tfCalle.getText().isEmpty() || tfCodigoPostal.getText().isEmpty() || tfCiudad.getText().isEmpty() || tfTelefono.getText().isEmpty()) {
-            new Alert(Alert.AlertType.ERROR, "Faltan campos por rellenar").showAndWait();
+            new Alert(Alert.AlertType.ERROR, "Faltan campos por rellenar"+" "+campoSinRellenar ).showAndWait();
             return false;
         }
+        
         if (!isValidEmail(tfEmail.getText())) {
             new Alert(Alert.AlertType.ERROR, "El email no tiene un formato correcto").showAndWait();
             return false;
@@ -226,9 +243,57 @@ public class SignUpFXMLController {
             new Alert(Alert.AlertType.ERROR, "El número de teléfono no es válido").showAndWait();
             return false;
         }
+        if (!isValidCodigoPostal(tfCodigoPostal.getText())) {
+            new Alert(Alert.AlertType.ERROR, "El codigo postal no es valido").showAndWait();
+            return false;
+        }
+        
         return true;
     }
-
+    
+public String comprobarCampos(){
+        String  text= "";
+        if(tfEmail.getText().isEmpty()){
+                text=email.getText();
+                return text;
+    }
+            if (tfpContrasena.getText().isEmpty()) {
+        text=contrasena.getText();
+        return text;
+     }
+     if (tfpContrasena2.getText().isEmpty()) {
+                text=contrasena.getText();
+                return text;
+     }
+    if (tfNombre.getText().isEmpty()) {
+           text=nombre.getText();
+           return text;
+    }
+     
+     if (tfApellido.getText().isEmpty()) {
+        text=apellido.getText();
+        return text;
+     }
+    if(tfCalle.getText().isEmpty()){
+        text=calle.getText();
+        return text;
+    }
+     if(tfCodigoPostal.getText().isEmpty()){
+                  text=codigoPostal.getText();
+                  return text;
+     }
+    if(tfCiudad.getText().isEmpty()){
+             text=ciudad.getText();
+             return text;
+    }
+ 
+     if(tfTelefono.getText().isEmpty()){
+                text=telefono.getText();
+                return text;
+    }
+  
+   return text;
+}
     /**
      * Inicializa el controlador y configura el evento de cierre de la ventana.
      */
@@ -249,6 +314,14 @@ public class SignUpFXMLController {
         if (mostrarAlert("Confirmacion", "¿Está seguro de que desea cerrar la aplicación? Todos los cambios no guardados se perderán.")) {
             Stage stage = (Stage) tfApellido.getScene().getWindow();
             stage.close();
+        }
+    }
+@FXML
+    private void irASignIn(String text) {
+        try {
+            SignUpSignIn.navegarVentanas("SignInFXML.fxml");
+        } catch (Exception ex) {
+            Logger.getLogger(SignUpFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

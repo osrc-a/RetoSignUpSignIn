@@ -9,10 +9,10 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane id="pane" prefHeight="324.0" prefWidth="465.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SignInFXMLController">
+<AnchorPane id="anchorPane" prefHeight="324.0" prefWidth="465.0" styleClass="mainFxmlClass" stylesheets="@../resources/SignInSignUpClient.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SignInFXMLController">
 
     <children>
-        <GridPane fx:id="pane" prefHeight="552.0" prefWidth="768.0" stylesheets="@../resources/SignInSignUpClient.css">
+        <GridPane fx:id="pane" prefHeight="552.0" prefWidth="768.0" >
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="263.3999786376953" minWidth="10.0" prefWidth="134.80001220703124" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="538.4" minWidth="0.0" prefWidth="165.9999877929687" />

@@ -7,12 +7,17 @@ and open the template in the editor.
     Created on : 18-oct-2024, 9:41:15
     Author     : 2dam
 */
-#pane{
+#anchorPane{
+    
  -fx-background-image: url("fondo.jpg");
+ -fx-background-fills: 30%;
     -fx-background-repeat: stretch;   
     -fx-background-size: 900 900;
     -fx-background-position: center center;
     -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0); 
+}
+.fondo{
+     filter: brightness(10%); 
 }
 .labelRounded{
             -fx-background-radius: 15; 
